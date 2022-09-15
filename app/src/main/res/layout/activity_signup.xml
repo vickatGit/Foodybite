@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Signup_Activity">
+
+    <ImageView
+        android:layout_width="600dp"
+        android:layout_height="850dp"
+        android:background="@drawable/signup_activity_bg"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/activity_image_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#995E5D5D"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_container"
+                    android:layout_width="match_parent"
+                    android:hint="Name"
+                    app:startIconDrawable="@drawable/mail_icon"
+                    app:boxBackgroundColor="@android:color/white"
+                    app:startIconTint="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:background="@drawable/transparent_edit_text"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#995E5D5D"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_container"
+                    android:layout_width="match_parent"
+                    android:hint="Email"
+                    app:startIconDrawable="@drawable/mail_icon"
+                    app:boxBackgroundColor="@android:color/white"
+                    app:startIconTint="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+
+                    app:boxStrokeColor="@color/white"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:background="@drawable/transparent_edit_text"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#995E5D5D"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_container"
+                    android:layout_width="match_parent"
+                    android:hint="Password"
+                    app:startIconDrawable="@drawable/open_lock_icon"
+                    app:startIconTint="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:inputType="textPassword"
+                        android:background="@drawable/transparent_edit_text"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#995E5D5D"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirm_password_container"
+                    android:layout_width="match_parent"
+                    android:hint="Confirm Password"
+                    app:startIconDrawable="@drawable/open_lock_icon"
+                    app:startIconTint="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirm_password"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:inputType="textPassword"
+                        android:background="@drawable/transparent_edit_text"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/app_light"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="60dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:padding="17dp"
+                app:cornerRadius="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:text="Already have an account?"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:text="Login"
+                    android:minHeight="0dp"
+                    android:textStyle="bold"
+                    android:textColor="#414BAF"
+                    android:minWidth="0dp"
+                    android:textAllCaps="false"
+
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

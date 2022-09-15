@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "522366622653",
+    "project_id": "food-clone-c7e62",
+    "storage_bucket": "food-clone-c7e62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522366622653:android:fe86b42ae3d72ae98890d4",
+        "android_client_info": {
+          "package_name": "com.example.foodies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522366622653-4grd8elpor34ppi925norhbqg3gcve9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwWPQ6lkrxLWnec9cszUD0vurimidjR6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522366622653-4grd8elpor34ppi925norhbqg3gcve9k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
