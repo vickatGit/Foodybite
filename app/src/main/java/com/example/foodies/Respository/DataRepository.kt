@@ -14,7 +14,7 @@ class DataRepository {
 
     private val db=FirebaseFirestore.getInstance()
     private val isEmailAlreadyExists:MutableLiveData<Boolean> = MutableLiveData()
-    private val isUserExist:MutableLiveData<String> = MutableLiveData()
+    val isUserExist:MutableLiveData<String> = MutableLiveData()
     private val isUserCreated:MutableLiveData<String> = MutableLiveData()
 
     companion object{
@@ -50,5 +50,19 @@ class DataRepository {
                 isEmailAlreadyExists.postValue(false)
         }
         return isEmailAlreadyExists
+    }
+    fun isUserExist(email:String,password:String): MutableLiveData<String> {
+        db.collection("Users").whereEqualTo("email",email).get().addOnCompleteListener {
+            if(it.isSuccessful){
+                val hashedPassword=it.result.documents.get(0).get("password").toString()
+                if(BCrypt.verifyer().verify(password.toCharArray(),hashedPassword).verified)
+                    isUserExist.postValue(it.result.documents.get(0).getString("userRef"))
+                else
+                    isUserExist.postValue(null)
+            }else{
+                isUserExist.postValue(null)
+            }
+        }
+        return isUserExist
     }
 }

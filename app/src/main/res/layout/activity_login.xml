@@ -89,6 +89,17 @@
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <TextView
+            android:id="@+id/login_error"
+            android:visibility="invisible"
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="incorrect information"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login"
             android:layout_width="match_parent"
@@ -96,7 +107,7 @@
             android:backgroundTint="@color/app_light"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:text="Login"
             android:textAllCaps="false"
             android:padding="17dp"
@@ -113,6 +124,19 @@
             android:textSize="15sp"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:indeterminateTint="@color/app_light"
+        android:indeterminateTintMode="src_atop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

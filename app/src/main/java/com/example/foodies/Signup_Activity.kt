@@ -8,8 +8,10 @@ import android.os.UserManager
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +32,7 @@ class Signup_Activity : AppCompatActivity() {
     private lateinit var register:Button
     private lateinit var login:Button
     private lateinit var viewModel:SignupViewModel
+    private lateinit var signupProgress:ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,27 +43,31 @@ class Signup_Activity : AppCompatActivity() {
         register.setOnClickListener {
             if(isAllFieldsAreFilled()){
                 if(isEmailValid(email.text.toString())) {
+                    signupProgress.visibility= View.VISIBLE
                     Log.d("tag", "onCreate: email is not valid")
                     viewModel.isEmailAlreadyExists(email.text.toString())?.observe(this, Observer {
                         if(it==true) {
                             emailContainer.isErrorEnabled=true
                             emailContainer.error = "Email Already Exists"
+                            signupProgress.visibility= View.INVISIBLE
                         }
-                        else{
-                            if (isBothPasswordMatches()) {
+                        else{ if (isBothPasswordMatches()) {
                                 val user = UserModel(username.text.toString(), email.text.toString(), password.text.toString(), null)
                                 viewModel.registerUser(user)?.observe(this, Observer {
                                     val intent=Intent(this,HomeActivity::class.java)
                                     intent.putExtra("userId",it)
                                     startActivity(intent)
+                                    signupProgress.visibility= View.INVISIBLE
                                 })
-                            }
+                            }else
+                                signupProgress.visibility= View.INVISIBLE
                         }
-
                     })
                 }
-
             }
+        }
+        login.setOnClickListener {
+            startActivity(Intent(this,LoginActivity::class.java))
         }
     }
 
@@ -126,5 +133,6 @@ class Signup_Activity : AppCompatActivity() {
         confirmPasswordContainer=findViewById(R.id.confirm_password_container)
         register=findViewById(R.id.register)
         login=findViewById(R.id.login)
+        signupProgress=findViewById(R.id.progress)
     }
 }
