@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginError:TextView
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -39,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
                         loginProgress.visibility= View.INVISIBLE
                         val intent=Intent(this,HomeActivity::class.java)
                         intent.putExtra("userId",it)
+                        val loginEditor=getSharedPreferences(MainActivity.LOGIN_SHARED_PREFERENCES, MODE_PRIVATE).edit()
+                        loginEditor.putString(MainActivity.USER_REFERENCE,it).commit()
                         startActivity(intent)
                     }else{
                         loginError.visibility=View.VISIBLE

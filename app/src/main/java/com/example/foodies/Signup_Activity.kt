@@ -56,6 +56,8 @@ class Signup_Activity : AppCompatActivity() {
                                 viewModel.registerUser(user)?.observe(this, Observer {
                                     val intent=Intent(this,HomeActivity::class.java)
                                     intent.putExtra("userId",it)
+                                    val loginEditor=getSharedPreferences(MainActivity.LOGIN_SHARED_PREFERENCES, MODE_PRIVATE).edit()
+                                    loginEditor.putString(MainActivity.USER_REFERENCE,it).commit()
                                     startActivity(intent)
                                     signupProgress.visibility= View.INVISIBLE
                                 })

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home_icon"
+        app:showAsAction="always"
+        android:title="Home" />
+    <item
+        android:id="@+id/bookmarks"
+        android:icon="@drawable/bookmark_icon"
+        app:showAsAction="always"
+        android:title="Bookmark" />
+    <item
+        android:id="@+id/useless"
+        android:title="useless"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/notification_icon"
+        app:showAsAction="always"
+        android:title="Notifications" />
+
+    <item
+        android:id="@+id/user"
+        android:icon="@drawable/user_icon"
+        app:showAsAction="always"
+        android:title="User" />
+</menu>

@@ -26,4 +26,9 @@
         <item name="android:textColorHint">@color/white</item>    // Hint Color
         <item name="colorControlActivated">@color/white</item>    //Floating label color
     </style>
+    <style name="BottomTheme" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/app_light</item>
+        <item name="colorPrimaryDark">@color/app_dark</item>
+        <item name="colorAccent">@color/app_light</item>
+    </style>
 </resources>

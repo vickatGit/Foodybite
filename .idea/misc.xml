@@ -4,10 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/activity_image_bg.xml" value="0.2890625" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/bookmark_icon.xml" value="0.17291666666666666" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/bottom_color_selector.xml" value="0.17291666666666666" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/home_icon.xml" value="0.17291666666666666" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/notification_icon.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/transparent_edit_text.xml" value="0.2890625" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/user_icon.xml" value="0.17291666666666666" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_login.xml" value="0.21" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_signup.xml" value="0.27291666666666664" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/fragment_home.xml" value="0.2639138240574506" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/restaurent_thumbnail_layout.xml" value="0.27291666666666664" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/menu/home_menu.xml" value="0.16302083333333334" />
       </map>
     </option>
   </component>

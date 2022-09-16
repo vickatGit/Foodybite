@@ -3,19 +3,29 @@ package com.example.foodies.Respository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import at.favre.lib.crypto.bcrypt.BCrypt
+import com.example.foodies.Models.BusinessModel
+import com.example.foodies.Models.Businesse
 import com.example.foodies.Models.UserModel
+import com.example.foodies.Networking.BusinessFetcher
+import com.example.foodies.Networking.RetroHelper
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DataRepository {
+    private val API_KEY="cfo72-p8TKk8JVCClHts2-F2aLDHmaitKVgmwW47YsXUZMpuos_hWoM_0iESLi7mmelKnQeVZLLoEp3eDK7pPO-v5m1AMxIra57QJ6LgdYRfbvejxnx6gWlWXXccY3Yx"
 
     private val db=FirebaseFirestore.getInstance()
     private val isEmailAlreadyExists:MutableLiveData<Boolean> = MutableLiveData()
     val isUserExist:MutableLiveData<String> = MutableLiveData()
     private val isUserCreated:MutableLiveData<String> = MutableLiveData()
+
+    val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
 
     companion object{
         val TAG="tag"
@@ -64,5 +74,33 @@ class DataRepository {
             }
         }
         return isUserExist
+    }
+
+    fun getFamousRestaurants(): MutableLiveData<List<Businesse>> {
+        val retro=RetroHelper.getInstance()
+        val famousRestaurants=ArrayList<Businesse>(1)
+        retro.create(BusinessFetcher::class.java)
+            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak", arrayOf("hot_and_new"))
+            .enqueue(object :Callback<BusinessModel>{
+                override fun onResponse(
+                    call: Call<BusinessModel>,
+                    response: Response<BusinessModel>
+                ) {
+                    Log.d(TAG, "onResponse: $response")
+                    if(response.isSuccessful){
+                        if(response.body()!=null){
+                            Log.d(TAG, "onResponse: "+Gson().toJson(response.body()))
+                            famousRestaurants.addAll(response?.body()!!.businesses)
+                            popularRestaurants.postValue(famousRestaurants)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<BusinessModel>, t: Throwable) {
+                    Log.d(TAG, "onFailure: ${t.localizedMessage}")
+                }
+
+            })
+        return popularRestaurants
     }
 }
