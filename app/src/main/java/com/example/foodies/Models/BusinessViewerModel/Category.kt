@@ -1,4 +1,4 @@
-package com.example.foodies.Models
+package com.example.foodies.Models.BusinessViewerModel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

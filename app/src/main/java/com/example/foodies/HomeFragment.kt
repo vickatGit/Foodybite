@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         val view=inflater.inflate(R.layout.fragment_home, container, false)
         initialise(view)
         popularRestaurantsRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants)
+        popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants,this.context)
         popularRestaurantsRecycler.adapter=popularRestaurantsAdapter
 
         categoriesRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)

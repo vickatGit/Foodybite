@@ -1,10 +1,10 @@
-package com.example.foodies.Models
+package com.example.foodies.Models.BusinessViewerModel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Center(
+data class Coordinates(
     val latitude: Double,
     val longitude: Double
 ) : Parcelable

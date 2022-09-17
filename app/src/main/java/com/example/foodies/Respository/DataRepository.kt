@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.example.foodies.Models.BusinessModel
+import com.example.foodies.Models.BusinessReviewModel.BusinessReviewsModel
+import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
 import com.example.foodies.Models.Businesse
 import com.example.foodies.Models.UserModel
 import com.example.foodies.Networking.BusinessFetcher
@@ -26,6 +28,8 @@ class DataRepository {
     private val isUserCreated:MutableLiveData<String> = MutableLiveData()
 
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
+    val businessDetails:MutableLiveData<BusinessDetailModel> = MutableLiveData()
+    val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
 
     companion object{
         val TAG="tag"
@@ -102,5 +106,39 @@ class DataRepository {
 
             })
         return popularRestaurants
+    }
+
+    fun getBusiness(id: String?): MutableLiveData<BusinessDetailModel> {
+        val retro=RetroHelper.getInstance().create(BusinessFetcher::class.java)
+        retro.getBusiness("Bearer $API_KEY",id!!).enqueue(object:Callback<BusinessDetailModel>{
+            override fun onResponse( call: Call<BusinessDetailModel>, response: Response<BusinessDetailModel>) {
+                businessDetails.postValue(response.body())
+                Log.d(TAG, "onResponse: ${response}")
+            }
+
+            override fun onFailure(call: Call<BusinessDetailModel>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.localizedMessage}")
+            }
+
+        })
+        return businessDetails
+    }
+
+    fun getBusinessReviews(id: String?): MutableLiveData<BusinessReviewsModel> {
+        val retro=RetroHelper.getInstance().create(BusinessFetcher::class.java)
+        retro.getBusinessReviews("Bearer $API_KEY",id!!).enqueue(object : Callback<BusinessReviewsModel>{
+            override fun onResponse(
+                call: Call<BusinessReviewsModel>,
+                response: Response<BusinessReviewsModel>
+            ) {
+                businessReviews.postValue(response.body())
+                Log.d(TAG, "onResponse: review response $response")
+            }
+
+            override fun onFailure(call: Call<BusinessReviewsModel>, t: Throwable) {
+            }
+
+        })
+        return businessReviews
     }
 }

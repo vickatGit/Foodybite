@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -48,6 +49,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.1'
     implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.9.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
