@@ -19,6 +19,7 @@ interface BusinessFetcher {
         @Header("Authorization") authHeader: String,
         @Query("location") location:String,
         @Query("categories") category: String,
+        @Query("sort_by") sorter:String,
         @Query("attributes") filter: Array<String>
     ):Call<BusinessModel>
 }

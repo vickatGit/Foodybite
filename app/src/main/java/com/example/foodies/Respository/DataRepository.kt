@@ -80,7 +80,7 @@ class DataRepository {
         val retro=RetroHelper.getInstance()
         val famousRestaurants=ArrayList<Businesse>(1)
         retro.create(BusinessFetcher::class.java)
-            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak", arrayOf("hot_and_new"))
+            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak","rating", arrayOf("hot_and_new"))
             .enqueue(object :Callback<BusinessModel>{
                 override fun onResponse(
                     call: Call<BusinessModel>,

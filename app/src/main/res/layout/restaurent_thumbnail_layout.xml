@@ -4,18 +4,19 @@
     android:layout_width="wrap_content"
     app:cardCornerRadius="10dp"
     android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     app:cardElevation="10dp"
     android:layout_marginStart="20dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/restaurant_poster"
-            android:layout_width="250dp"
+            android:layout_width="290dp"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:src="@drawable/o"
@@ -31,9 +32,9 @@
             android:ellipsize="marquee"
             android:text="Happy Bonesssssssssssssssssss"
             android:textColor="@color/black"
-            android:textSize="21sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:layout_marginStart="17dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restaurant_poster" />
@@ -49,10 +50,9 @@
             android:ellipsize="marquee"
             android:text="394 Br4oome st, New York, NY 10013, USA"
             android:textStyle="bold"
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restaurent_name" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

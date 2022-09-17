@@ -24,6 +24,9 @@ class PopularRestaurantsAdapter(val popularRestaurants: ArrayList<Businesse>) : 
         Glide.with(holder.restaurantPoster.context).load(popularRestaurants.get(position).image_url).into(holder.restaurantPoster)
         holder.restaurantsName.text=popularRestaurants.get(position).name
         holder.restaurantsAddress.text=popularRestaurants.get(position).location.address1
+        holder.view.setOnClickListener {
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -33,5 +36,6 @@ class PopularRestaurantsAdapter(val popularRestaurants: ArrayList<Businesse>) : 
         val restaurantPoster:ImageView=itemView.findViewById(R.id.restaurant_poster)
         val restaurantsName:TextView=itemView.findViewById(R.id.restaurent_name)
         val restaurantsAddress:TextView=itemView.findViewById(R.id.restaurent_address)
+        val view=itemView
     }
 }
