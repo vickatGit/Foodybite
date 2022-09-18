@@ -2,6 +2,7 @@ package com.example.foodies
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodies.Adapters.BusinessReviewsAdapter
@@ -13,13 +14,14 @@ class AllReviewsActivity : AppCompatActivity() {
     private lateinit var reviewsAdapter: BusinessReviewsAdapter
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_reviews)
         reviews.addAll(intent.getParcelableArrayListExtra<Review>(BusinessActivity.REVIEWS_BRIDGE)!!)
         initialise()
         reviewsRecycler.layoutManager=LinearLayoutManager(this)
-        reviewsAdapter=BusinessReviewsAdapter(reviews,false)
+        reviewsAdapter= BusinessReviewsAdapter(reviews,false)
         reviewsRecycler.adapter=reviewsAdapter
 
     }

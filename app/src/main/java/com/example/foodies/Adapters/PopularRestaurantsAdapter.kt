@@ -11,10 +11,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodies.BusinessActivity
+import com.example.foodies.MainActivity
 import com.example.foodies.Models.Businesse
 import com.example.foodies.R
 
-class PopularRestaurantsAdapter(val popularRestaurants: ArrayList<Businesse>, val context: Context?) : RecyclerView.Adapter<PopularRestaurantsAdapter.BusinessHolder>() {
+class PopularRestaurantsAdapter(
+    val popularRestaurants: ArrayList<Businesse>,
+    val context: Context?,
+    val userId: String
+) : RecyclerView.Adapter<PopularRestaurantsAdapter.BusinessHolder>() {
 
     companion object{
         val BUSINESS_BRIDGE="business"
@@ -33,6 +38,7 @@ class PopularRestaurantsAdapter(val popularRestaurants: ArrayList<Businesse>, va
         holder.view.setOnClickListener {
             val intent=Intent(holder.view.context,BusinessActivity::class.java)
             intent.putExtra(BUSINESS_BRIDGE,popularRestaurants.get(position))
+            intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
             context?.startActivity(intent)
         }
     }

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.foodies.Models.CategoryThumbModel
 import com.example.foodies.R
 
-class CategoryAdapter(val categories: ArrayList<CategoryThumbModel>) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+class CategoryAdapter(val categories: ArrayList<CategoryThumbModel>, val userId: String) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val view=LayoutInflater.from(parent.context).inflate(R.layout.category_thumb_layout,parent,false)
         return CategoryHolder(view)

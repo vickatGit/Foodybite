@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var searcher:androidx.appcompat.widget.SearchView
     private lateinit var categoriesRecycler:RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var userId:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel=ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
@@ -41,13 +42,14 @@ class HomeFragment : Fragment() {
     ): View? {
         Log.d("TAG", "onCreateView: homefragment")
         val view=inflater.inflate(R.layout.fragment_home, container, false)
+        userId=arguments?.getString(MainActivity.USER_ID_BRIDGE).toString()
         initialise(view)
         popularRestaurantsRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants,this.context)
+        popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants,this.context,userId)
         popularRestaurantsRecycler.adapter=popularRestaurantsAdapter
 
         categoriesRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        categoryAdapter= CategoryAdapter(CategoryDataSource.categoriesInitialiser())
+        categoryAdapter= CategoryAdapter(CategoryDataSource.categoriesInitialiser(),userId)
         categoriesRecycler.adapter=categoryAdapter
         viewModel.getPopularRestaurants()?.observe(this.viewLifecycleOwner, Observer {
             if(it!=null){

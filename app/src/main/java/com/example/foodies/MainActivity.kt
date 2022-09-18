@@ -8,6 +8,7 @@ class MainActivity : AppCompatActivity() {
     companion object{
         val LOGIN_SHARED_PREFERENCES="login_ shared_preferences"
         val USER_REFERENCE="user_reference"
+        val USER_ID_BRIDGE="user_id_message_passer"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         }
         else{
             val intent=Intent(this,HomeActivity::class.java)
-            intent.putExtra("userId",userRef)
+            intent.putExtra(USER_ID_BRIDGE,userRef)
             startActivity(intent)
         }
 

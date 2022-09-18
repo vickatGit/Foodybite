@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -38,20 +39,22 @@ class BusinessActivity : AppCompatActivity() {
     private lateinit var businessReviewsAdapter: BusinessReviewsAdapter
     private lateinit var viewModel: BusinessActivityViewModel
     private lateinit var businessDetails: BusinessDetailModel
+    private lateinit var rateExperiance: Button
+    private lateinit var userId:String
 
     companion object {
         val REVIEWS_BRIDGE = "reviews_passer_message"
+        val BUSINESS_ID_BRIDGE = "business_id_passer_message"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_business)
         viewModel = ViewModelProvider(this).get(BusinessActivityViewModel::class.java)
-        val business =
-            intent.getParcelableExtra<Businesse>(PopularRestaurantsAdapter.BUSINESS_BRIDGE)
+        val business = intent.getParcelableExtra<Businesse>(PopularRestaurantsAdapter.BUSINESS_BRIDGE)
+        userId=intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
         initialise()
-        businessPhotoGalleryRecycler.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        businessPhotoGalleryRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         businessReviewsRecycler.layoutManager = LinearLayoutManager(this)
         businessReviewsAdapter = BusinessReviewsAdapter(businessReviews, true)
         businessReviewsRecycler.adapter = businessReviewsAdapter
@@ -90,6 +93,12 @@ class BusinessActivity : AppCompatActivity() {
             intent.putExtra(REVIEWS_BRIDGE, businessReviews)
             startActivity(intent)
         }
+        rateExperiance.setOnClickListener {
+            val intent=Intent(this,RatingReviewActivity::class.java)
+            intent.putExtra(BUSINESS_ID_BRIDGE,business?.id)
+            intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
+            startActivity(intent)
+        }
     }
 
     private fun businessTimingProcessor(hour: Hour): String {
@@ -120,6 +129,7 @@ class BusinessActivity : AppCompatActivity() {
         businessReviewsRecycler = findViewById(R.id.business_reviews_and_ratings)
         seeAllReviews = findViewById(R.id.see_all_reviews)
         seeAllReviews.visibility = View.GONE
+        rateExperiance=findViewById(R.id.rate_experiance)
 
     }
 }

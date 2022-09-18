@@ -11,6 +11,7 @@ import com.example.foodies.Models.UserModel
 import com.example.foodies.Networking.BusinessFetcher
 import com.example.foodies.Networking.RetroHelper
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,7 @@ class DataRepository {
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
     val businessDetails:MutableLiveData<BusinessDetailModel> = MutableLiveData()
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
+    val isReviewSaved:MutableLiveData<Boolean> = MutableLiveData()
 
     companion object{
         val TAG="tag"
@@ -140,5 +142,26 @@ class DataRepository {
 
         })
         return businessReviews
+    }
+
+    fun saveReview(experience: HashMap<String, String?>, userId: String): MutableLiveData<Boolean> {
+        Log.d(TAG, "saveReview: ${experience.toString()}")
+
+        try{
+        db.collection("Users").document(userId).collection("rating_and_reviews").document().set(experience, SetOptions.merge()).addOnCompleteListener {
+            if(it.isSuccessful) {
+                Log.d(TAG, "saveReview: Review Saved Successfully")
+                isReviewSaved.postValue(true)
+            }
+            else {
+                Log.d(TAG, "saveReview: Review saving failed")
+                isReviewSaved.postValue(false)
+            }
+        }
+        }catch (e:Exception){
+            Log.d(TAG, "saveReview: $e")
+            isReviewSaved.postValue(false)
+        }
+        return isReviewSaved
     }
 }
