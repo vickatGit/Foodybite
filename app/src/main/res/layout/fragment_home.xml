@@ -51,13 +51,34 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trending Restaurants"
+                android:textColor="@color/black"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:textSize="20sp"/>
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
                 android:id="@+id/popular_restaurants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="@color/black"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:textSize="20sp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
