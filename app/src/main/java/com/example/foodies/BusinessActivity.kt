@@ -22,6 +22,10 @@ import com.example.foodies.Models.BusinessViewerModel.Hour
 import com.example.foodies.Models.Businesse
 import com.example.foodies.ViewModels.BusinessActivityViewModel
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BusinessActivity : AppCompatActivity() {
     private lateinit var businessPoster: ImageView
@@ -36,6 +40,8 @@ class BusinessActivity : AppCompatActivity() {
     private lateinit var businessRating: TextView
     private var businessImages = ArrayList<String>(1)
     private var businessReviews = ArrayList<Review>(1)
+    private var immutableReviews = ArrayList<Review>(1)
+    private var immutableDbReviews = ArrayList<Review>(1)
     private lateinit var businessReviewsAdapter: BusinessReviewsAdapter
     private lateinit var viewModel: BusinessActivityViewModel
     private lateinit var businessDetails: BusinessDetailModel
@@ -74,11 +80,32 @@ class BusinessActivity : AppCompatActivity() {
                 }else{ businessTiming.text="N/A"}
             }
         })
+        viewModel.getBusinessReviewsFromDatabase(business?.id)?.observe(this, Observer {
+            if(it!=null){
+                businessReviews.clear()
+                immutableDbReviews.clear()
+                immutableDbReviews.addAll(it)
+                businessReviews.addAll(immutableDbReviews)
+                businessReviews.addAll(immutableReviews)
+                businessReviews.sortBy { it.time_created }
+                businessReviewsAdapter.notifyDataSetChanged()
+            }
+        })
+
         viewModel.getBusinessReviews(business?.id)?.observe(this, Observer {
             if (it != null) {
                 Log.d("TAG", "onCreate: reviews $it")
                 businessReviews.clear()
-                businessReviews.addAll(it.reviews)
+                immutableReviews.clear()
+                it.reviews.forEach {
+                    val date=SimpleDateFormat("yyyy-MM-d HH:mm:ss")
+                    it.time_created= date.parse(it.time_created).toString()
+                    immutableReviews.add(it)
+                }
+                businessReviews.addAll(immutableReviews)
+                businessReviews.addAll(immutableDbReviews)
+                businessReviews.sortBy { it.time_created }
+
 
                 if (it.reviews.size > 0) seeAllReviews.visibility = View.VISIBLE
                 businessReviewsAdapter.notifyDataSetChanged()
@@ -106,15 +133,11 @@ class BusinessActivity : AppCompatActivity() {
         val start = hour.open.get(0).start
         var successor = ""
         if (start.substring(2, 4).toInt() % 60 == 0) successor = "0"
-        val startHour =
-            (start.substring(0, 2).toInt() % 12).toString() + ":" + (start.substring(2, 4)
-                .toInt() % 60).toString() + "$successor am"
-
+        val startHour = (start.substring(0, 2).toInt() % 12).toString() + ":" + (start.substring(2, 4).toInt() % 60).toString() + "$successor am"
         val end = hour.open.get(0).end
         successor = ""
         if (end.substring(2, 4).toInt() % 60 == 0) successor = "0"
-        val endHour = (end.substring(0, 2).toInt() % 12).toString() + ":" + (end.substring(2, 4)
-            .toInt() % 60).toString() + "$successor pm"
+        val endHour = (end.substring(0, 2).toInt() % 12).toString() + ":" + (end.substring(2, 4).toInt() % 60).toString() + "$successor pm"
         return startHour + " to " + endHour
     }
 

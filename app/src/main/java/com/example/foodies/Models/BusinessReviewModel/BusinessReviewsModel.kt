@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BusinessReviewsModel(
-    val possible_languages: List<String>,
+    val possible_languages: List<String>?,
     val reviews: List<Review>,
     val total: Int
 ) : Parcelable

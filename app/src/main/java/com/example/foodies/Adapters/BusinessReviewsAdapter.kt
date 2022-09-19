@@ -1,5 +1,6 @@
 package com.example.foodies.Adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodies.Models.BusinessReviewModel.Review
 import com.example.foodies.R
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BusinessReviewsAdapter(val reviews: ArrayList<Review>, val isWholeReview: Boolean) : RecyclerView.Adapter<BusinessReviewsAdapter.ReviewThumbnailHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewThumbnailHolder {
@@ -19,7 +22,8 @@ class BusinessReviewsAdapter(val reviews: ArrayList<Review>, val isWholeReview: 
     override fun onBindViewHolder(holder: ReviewThumbnailHolder, position: Int) {
         holder.userReviewThumb.setSingleLine(isWholeReview)
         val reviews=this.reviews.get(position)
-        if(reviews.user.image_url!=null)
+        Log.d("TAG", "onBindViewHolder: Review Images ${reviews.time_created} ")
+        if(reviews.user.image_url!=null )
             Glide.with(holder.userProfile).load(reviews?.user?.image_url).into(holder.userProfile)
         else
             Glide.with(holder.userProfile).load(R.drawable.default_user_avatar).into(holder.userProfile)

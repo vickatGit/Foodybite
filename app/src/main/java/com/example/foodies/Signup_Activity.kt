@@ -52,7 +52,7 @@ class Signup_Activity : AppCompatActivity() {
                             signupProgress.visibility= View.INVISIBLE
                         }
                         else{ if (isBothPasswordMatches()) {
-                                val user = UserModel(username.text.toString(), email.text.toString(), password.text.toString(), null)
+                                val user = UserModel(username.text.toString(), email.text.toString(), password.text.toString(), null,null)
                                 viewModel.registerUser(user)?.observe(this, Observer {
                                     val intent=Intent(this,HomeActivity::class.java)
                                     intent.putExtra("userId",it)

@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.example.foodies.Models.BusinessModel
 import com.example.foodies.Models.BusinessReviewModel.BusinessReviewsModel
+import com.example.foodies.Models.BusinessReviewModel.Review
+import com.example.foodies.Models.BusinessReviewModel.User
 import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
 import com.example.foodies.Models.Businesse
 import com.example.foodies.Models.UserModel
@@ -31,7 +33,9 @@ class DataRepository {
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
     val businessDetails:MutableLiveData<BusinessDetailModel> = MutableLiveData()
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
+    val dbReviews:MutableLiveData<List<Review>> = MutableLiveData()
     val isReviewSaved:MutableLiveData<Boolean> = MutableLiveData()
+    val userInfo:MutableLiveData<UserModel> = MutableLiveData()
 
     companion object{
         val TAG="tag"
@@ -144,11 +148,10 @@ class DataRepository {
         return businessReviews
     }
 
-    fun saveReview(experience: HashMap<String, String?>, userId: String): MutableLiveData<Boolean> {
-        Log.d(TAG, "saveReview: ${experience.toString()}")
+    fun saveReview(userReview: Review, userId: String): MutableLiveData<Boolean> {
 
         try{
-        db.collection("Users").document(userId).collection("rating_and_reviews").document().set(experience, SetOptions.merge()).addOnCompleteListener {
+        db.collection("Reviews").document().set(userReview, SetOptions.merge()).addOnCompleteListener {
             if(it.isSuccessful) {
                 Log.d(TAG, "saveReview: Review Saved Successfully")
                 isReviewSaved.postValue(true)
@@ -163,5 +166,32 @@ class DataRepository {
             isReviewSaved.postValue(false)
         }
         return isReviewSaved
+    }
+
+    fun getUserInfo(userId: String): MutableLiveData<UserModel> {
+        db.collection("Users").document(userId).get().addOnCompleteListener {
+            if(it.isSuccessful){
+                val user:UserModel= UserModel(it.result.get("username").toString(),it.result.getString("email").toString()
+                    ,null,userId, it.result.get("user_image_url") as String?)
+                userInfo.postValue(user)
+            }
+        }
+        return userInfo
+    }
+
+    fun getBusinessReviewsFromDatabase(businessId: String?): MutableLiveData<List<Review>> {
+        val userReviews=ArrayList<Review>(1)
+        db.collection("Reviews").whereEqualTo("id",businessId).addSnapshotListener { value, error ->
+            userReviews.clear()
+            value?.documents?.forEach {
+                val user=it.get("user") as Map<String,Any>
+                val review=Review(it.get("id").toString(),it.get("rating").toString().toInt(),it.get("text").toString(),it.get("time_created").toString()
+                    ,null
+                    ,User(user.get("id").toString(),user.get("image_url").toString(),user.get("name").toString(),null))
+                userReviews.add(review)
+            }
+            dbReviews.postValue(userReviews)
+        }
+        return dbReviews
     }
 }

@@ -3,12 +3,18 @@ package com.example.foodies
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.foodies.Models.BusinessReviewModel.Review
+import com.example.foodies.Models.BusinessReviewModel.User
+import com.example.foodies.Models.UserModel
 import com.example.foodies.ViewModels.RatingReviewActivityViewModel
 import com.google.android.material.card.MaterialCardView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RatingReviewActivity : AppCompatActivity() {
 
@@ -25,14 +31,19 @@ class RatingReviewActivity : AppCompatActivity() {
     private var stars=ArrayList<ImageView>(5)
     private lateinit var viewModel:RatingReviewActivityViewModel
     private lateinit var userId:String
+    private lateinit var userInfo:UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rating_review)
-        viewModel=ViewModelProvider(this).get(RatingReviewActivityViewModel::class.java)
-        initialise()
         val businessId=intent.getStringExtra(BusinessActivity.BUSINESS_ID_BRIDGE)
         userId=intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
+        viewModel=ViewModelProvider(this).get(RatingReviewActivityViewModel::class.java)
+        viewModel.getUserInfo(userId)?.observe(this, Observer {
+            userInfo=it!!
+            Log.d("TAG", "onCreate: userInfo image $userInfo")
+        })
+        initialise()
         star1.setOnClickListener {
             fillStars(0)
             rating=1
@@ -59,12 +70,14 @@ class RatingReviewActivity : AppCompatActivity() {
                 ratingcard.visibility=View.INVISIBLE
                 review.visibility=View.INVISIBLE
 
-                val experience=hashMapOf(
-                    "business_id" to businessId,
-                    "rating" to rating.toString(),
-                    "review" to review.text.toString()
-                )
-                viewModel.saveReview(experience,userId)?.observe(this, Observer {
+                val userReview=Review(businessId!!, rating!!.toInt(),review.text.toString(),Date().toString(),null, User(userId,userInfo.userImage,userInfo.username,null))
+//                val experience=hashMapOf(
+//                    "business_id" to businessId,
+//                    "rating" to rating.toString(),
+//                    "review" to review.text.toString(),
+//                    "user_id" to userId
+//                )
+                viewModel.saveReview(userReview,userId)?.observe(this, Observer {
                     if(it==true){
                         Toast.makeText(this,"Review Posted",Toast.LENGTH_SHORT)
                         progress.visibility= View.INVISIBLE

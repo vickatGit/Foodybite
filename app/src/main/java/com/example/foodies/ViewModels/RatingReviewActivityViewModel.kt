@@ -2,6 +2,8 @@ package com.example.foodies.ViewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.foodies.Models.BusinessReviewModel.Review
+import com.example.foodies.Models.UserModel
 import com.example.foodies.Respository.DataRepository
 
 class RatingReviewActivityViewModel: ViewModel() {
@@ -10,8 +12,11 @@ class RatingReviewActivityViewModel: ViewModel() {
     init {
         dataRepo= DataRepository.getInstance()
     }
-    fun saveReview(experience: HashMap<String, String?>, userId: String): MutableLiveData<Boolean>? {
-        return dataRepo?.saveReview(experience,userId)
+    fun saveReview(userReview: Review, userId: String): MutableLiveData<Boolean>? {
+        return dataRepo?.saveReview(userReview,userId)
+    }
+    fun getUserInfo(userId:String): MutableLiveData<UserModel>? {
+        return dataRepo?.getUserInfo(userId)
     }
 
 }
