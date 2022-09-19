@@ -26,4 +26,12 @@ class BusinessActivityViewModel: ViewModel() {
         return dataRepo?.getBusinessReviewsFromDatabase(id)
     }
 
+    fun addBusinessToFavourites(businessId: String?, userId: String): Unit? {
+        return dataRepo?.addBusinessToFavourites(businessId,userId)
+    }
+
+    fun removeBusinessFromFavourites(businessId: String?, userId: String): Unit? {
+        return dataRepo?.removeBusinessFromFavourites(businessId,userId)
+    }
+
 }

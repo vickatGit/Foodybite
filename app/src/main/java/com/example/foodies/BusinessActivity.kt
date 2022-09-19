@@ -1,6 +1,7 @@
 package com.example.foodies
 
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
 import com.example.foodies.Models.BusinessViewerModel.Hour
 import com.example.foodies.Models.Businesse
 import com.example.foodies.ViewModels.BusinessActivityViewModel
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -29,7 +32,7 @@ import kotlin.collections.ArrayList
 
 class BusinessActivity : AppCompatActivity() {
     private lateinit var businessPoster: ImageView
-    private lateinit var businessName: TextView
+    private lateinit var businessName: CollapsingToolbarLayout
     private lateinit var businessAddress: TextView
     private lateinit var businessStatus: TextView
     private lateinit var businessTiming: TextView
@@ -38,6 +41,7 @@ class BusinessActivity : AppCompatActivity() {
     private lateinit var businessReviewsRecycler: RecyclerView
     private lateinit var seeAllReviews: TextView
     private lateinit var businessRating: TextView
+    private lateinit var isFavourite:ToggleButton
     private var businessImages = ArrayList<String>(1)
     private var businessReviews = ArrayList<Review>(1)
     private var immutableReviews = ArrayList<Review>(1)
@@ -60,6 +64,13 @@ class BusinessActivity : AppCompatActivity() {
         val business = intent.getParcelableExtra<Businesse>(PopularRestaurantsAdapter.BUSINESS_BRIDGE)
         userId=intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
         initialise()
+
+        if(HomeActivity.userFavouriteBusinesses.contains(business?.id))
+            isFavourite.isChecked=true
+        else
+            isFavourite.isChecked=false
+
+        businessName.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
         businessPhotoGalleryRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         businessReviewsRecycler.layoutManager = LinearLayoutManager(this)
         businessReviewsAdapter = BusinessReviewsAdapter(businessReviews, true)
@@ -98,9 +109,11 @@ class BusinessActivity : AppCompatActivity() {
                 businessReviews.clear()
                 immutableReviews.clear()
                 it.reviews.forEach {
-                    val date=SimpleDateFormat("yyyy-MM-d HH:mm:ss")
-                    it.time_created= date.parse(it.time_created).toString()
-                    immutableReviews.add(it)
+                    try {
+                        val date = SimpleDateFormat("yyyy-MM-d HH:mm:ss")
+                        it.time_created = date.parse(it.time_created).toString()
+                        immutableReviews.add(it)
+                    }catch (e:Exception){}
                 }
                 businessReviews.addAll(immutableReviews)
                 businessReviews.addAll(immutableDbReviews)
@@ -112,13 +125,20 @@ class BusinessActivity : AppCompatActivity() {
             }
         })
         Glide.with(this).load(business?.image_url).into(businessPoster)
-        businessName.text = business?.name
+        businessName.title = business?.name
         if (business?.is_closed == true) businessStatus.text = "Open Now" else businessStatus.text =
             "closed"
         seeAllReviews.setOnClickListener {
             val intent = Intent(this, AllReviewsActivity::class.java)
             intent.putExtra(REVIEWS_BRIDGE, businessReviews)
             startActivity(intent)
+        }
+        isFavourite.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                viewModel.addBusinessToFavourites(business?.id,userId)
+            }else{
+                viewModel.removeBusinessFromFavourites(business?.id,userId)
+            }
         }
         rateExperiance.setOnClickListener {
             val intent=Intent(this,RatingReviewActivity::class.java)
@@ -143,7 +163,8 @@ class BusinessActivity : AppCompatActivity() {
 
     private fun initialise() {
         businessPoster = findViewById(R.id.business_poster)
-        businessName = findViewById(R.id.business_name)
+//        businessName = findViewById(R.id.business_name)
+        businessName = findViewById(R.id.business_collapsing_toolbar)
         businessRating = findViewById(R.id.business_rating)
         businessAddress = findViewById(R.id.business_address)
         businessStatus = findViewById(R.id.is_open)
@@ -152,6 +173,7 @@ class BusinessActivity : AppCompatActivity() {
         businessReviewsRecycler = findViewById(R.id.business_reviews_and_ratings)
         seeAllReviews = findViewById(R.id.see_all_reviews)
         seeAllReviews.visibility = View.GONE
+        isFavourite=findViewById(R.id.is_favourite)
         rateExperiance=findViewById(R.id.rate_experiance)
 
     }

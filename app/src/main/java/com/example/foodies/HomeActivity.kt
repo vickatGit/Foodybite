@@ -3,6 +3,7 @@ package com.example.foodies
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodies.Networking.BusinessFetcher
 import com.example.foodies.Networking.RetroHelper
@@ -20,6 +21,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var userId:String
 
     companion object{
+        var userFavouriteBusinesses=ArrayList<String>(1)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,9 @@ class HomeActivity : AppCompatActivity() {
         userId= intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
         initialise()
         viewModel=ViewModelProvider(this).get(HomeActivityViewModel::class.java)
+        viewModel.getUserFavouriteBusineses(userId)?.observe(this, Observer {
+            if(it!=null) userFavouriteBusinesses.addAll(it)
+        })
         val homeFragment=HomeFragment()
         val bundle=Bundle()
         bundle.putString(MainActivity.USER_ID_BRIDGE,userId)

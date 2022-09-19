@@ -12,6 +12,7 @@ import com.example.foodies.Models.Businesse
 import com.example.foodies.Models.UserModel
 import com.example.foodies.Networking.BusinessFetcher
 import com.example.foodies.Networking.RetroHelper
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
@@ -35,6 +36,7 @@ class DataRepository {
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
     val dbReviews:MutableLiveData<List<Review>> = MutableLiveData()
     val isReviewSaved:MutableLiveData<Boolean> = MutableLiveData()
+    val userFavouriteBusinesses:MutableLiveData<List<String>> = MutableLiveData()
     val userInfo:MutableLiveData<UserModel> = MutableLiveData()
 
     companion object{
@@ -193,5 +195,35 @@ class DataRepository {
             dbReviews.postValue(userReviews)
         }
         return dbReviews
+    }
+
+    fun addBusinessToFavourites(businessId: String?, userId: String) {
+        val favBusiness=hashMapOf( "business_id" to businessId )
+        db.collection("Users").document(userId).collection("favourite_businesses").document().set(favBusiness, SetOptions.merge())
+    }
+
+    fun removeBusinessFromFavourites(businessId: String?, userId: String) {
+        db.collection("Users").document(userId).collection("favourite_businesses")
+            .whereEqualTo("business_id", businessId).get().addOnCompleteListener {
+                it.result.documents.forEach {
+                    db.collection("Users").document(userId).collection("favourite_businesses")
+                        .document(it.id).delete()
+                }
+            }
+
+    }
+
+    fun getUserFavouriteBusineses(userId: String): MutableLiveData<List<String>> {
+        val favouriteBusinesses=ArrayList<String>(1)
+        db.collection("Users").document(userId).collection("favourite_businesses").get().addOnCompleteListener {
+            if(it.isSuccessful){
+                it.result.documents.forEach {
+                    favouriteBusinesses.add(it.get("business_id").toString())
+                }
+                userFavouriteBusinesses.postValue(favouriteBusinesses)
+            }
+        }
+        return userFavouriteBusinesses
+
     }
 }

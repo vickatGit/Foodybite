@@ -10,17 +10,25 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/rate_experiance">
+        app:layout_constraintBottom_toTopOf="@+id/rate_experiance"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/business_collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="0dp"
+                app:collapsedTitleTextColor="@color/black"
                 app:contentScrim="@color/white"
-                app:layout_scrollFlags="exitUntilCollapsed|scroll">
+                app:expandedTitleTextColor="@color/white"
+                app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                app:title="Restaurant Name">
 
                 <ImageView
                     android:id="@+id/business_poster"
@@ -30,14 +38,29 @@
                     android:src="@drawable/o"
                     app:layout_collapseMode="parallax" />
 
+
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/business_toolbar"
                     style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:elevation="0dp"
                     android:theme="@style/toolbar_icon_color"
-                    app:layout_collapseMode="pin"
-                    app:menu="@menu/business_menu" />
+                    app:itemIconTint="@color/white"
+                    app:layout_collapseMode="pin">
+
+                    <ToggleButton
+                        android:id="@+id/is_favourite"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bookmark_icon"
+                        android:backgroundTint="@color/app_light"
+                        android:textOff=""
+                        android:textOn="" />
+                </com.google.android.material.appbar.MaterialToolbar>
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -52,20 +75,20 @@
                 android:layout_height="fill_parent">
 
 
-                <TextView
-                    android:id="@+id/business_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:maxWidth="300dp"
-                    android:singleLine="true"
-                    android:text="Happy Bones"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--                <TextView-->
+                <!--                    android:id="@+id/business_name"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="20dp"-->
+                <!--                    android:layout_marginTop="20dp"-->
+                <!--                    android:maxWidth="300dp"-->
+                <!--                    android:singleLine="true"-->
+                <!--                    android:text="Happy Bones"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="25sp"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialCardView"
@@ -73,9 +96,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     app:cardCornerRadius="5dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/business_name"
+                    app:layout_constraintBottom_toTopOf="@+id/textView6"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/business_name">
+                    app:layout_constraintTop_toTopOf="@+id/business_address">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
@@ -110,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="20dp"
                     android:ellipsize="marquee"
                     android:maxWidth="220dp"
                     android:singleLine="true"
@@ -118,7 +141,7 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/business_name" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/is_open"
