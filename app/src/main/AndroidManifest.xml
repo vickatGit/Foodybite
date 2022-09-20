@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodies">
         <activity
+            android:name=".CategoryBusinesses"
+            android:exported="false" />
+        <activity
             android:name=".RatingReviewActivity"
             android:exported="false" />
         <activity

@@ -32,6 +32,7 @@ class DataRepository {
     private val isUserCreated:MutableLiveData<String> = MutableLiveData()
 
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
+    val searchedBusinesses:MutableLiveData<List<Businesse>> = MutableLiveData()
     val businessDetails:MutableLiveData<BusinessDetailModel> = MutableLiveData()
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
     val dbReviews:MutableLiveData<List<Review>> = MutableLiveData()
@@ -225,5 +226,19 @@ class DataRepository {
         }
         return userFavouriteBusinesses
 
+    }
+
+    fun getCategoryData(category: String?): MutableLiveData<List<Businesse>> {
+        val retro=RetroHelper.getInstance().create(BusinessFetcher::class.java)
+        category?.let { retro.search("Bearer $API_KEY", it,"San Francisco, CA").enqueue(object : Callback<BusinessModel>{
+            override fun onResponse(call: Call<BusinessModel>, response: Response<BusinessModel>) {
+                if(response.isSuccessful) searchedBusinesses.postValue(response.body()?.businesses)
+            }
+            override fun onFailure(call: Call<BusinessModel>, t: Throwable) {
+            }
+
+
+        }) }
+        return searchedBusinesses
     }
 }

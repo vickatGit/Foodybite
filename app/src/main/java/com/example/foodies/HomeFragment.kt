@@ -45,11 +45,16 @@ class HomeFragment : Fragment() {
         userId=arguments?.getString(MainActivity.USER_ID_BRIDGE).toString()
         initialise(view)
         popularRestaurantsRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants,this.context,userId)
+        popularRestaurantsAdapter=PopularRestaurantsAdapter(
+            popularRestaurants,
+            this.context,
+            userId,
+            false
+        )
         popularRestaurantsRecycler.adapter=popularRestaurantsAdapter
 
         categoriesRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        categoryAdapter= CategoryAdapter(CategoryDataSource.categoriesInitialiser(),userId)
+        categoryAdapter= CategoryAdapter(CategoryDataSource.categoriesInitialiser(),userId,this.requireContext())
         categoriesRecycler.adapter=categoryAdapter
         viewModel.getPopularRestaurants()?.observe(this.viewLifecycleOwner, Observer {
             if(it!=null){
