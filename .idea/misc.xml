@@ -8,6 +8,7 @@
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/bookmark_icon.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/bottom_color_selector.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/category_bg.xml" value="0.1140625" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/category_thumb_bg.xml" value="0.190625" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/home_icon.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/input_cursor_drawable.xml" value="0.1703125" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/notification_icon.xml" value="0.17291666666666666" />
@@ -26,7 +27,7 @@
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/category_thumb_layout.xml" value="0.18" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/full_restaurent_thumbnail_layout.xml" value="0.1375" />
-        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/restaurent_thumbnail_layout.xml" value="0.27291666666666664" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/restaurent_thumbnail_layout.xml" value="0.25" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/review_thumbnail.xml" value="0.22" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/menu/business_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/menu/home_menu.xml" value="0.16302083333333334" />

@@ -2,6 +2,7 @@ package com.example.foodies.Adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,13 @@ class SearchedDataAdapter(
         val location=popularRestaurants.get(position).location
         holder.restaurantsAddress.text=location?.address1+", "+location?.city + ", "+location?.state
         Glide.with(holder.view.context).asBitmap().load(popularRestaurants.get(position)?.image_url).into(holder.restaurantPoster)
+        if(popularRestaurants.get(position).is_closed==false) {
+            holder.isRestaurantOpen.text="closed"
+            holder.isRestaurantOpen.setTextColor(Color.RED)
+        }
+        holder.category.text=popularRestaurants.get(position).categories?.get(0)?.title
+
+        holder.restaurantRating.text=popularRestaurants.get(position).rating.toString()
         holder.view.setOnClickListener {
             val intent= Intent(holder.view.context, BusinessActivity::class.java)
             intent.putExtra(BUSINESS_BRIDGE,popularRestaurants.get(position))
@@ -56,6 +64,9 @@ class SearchedDataAdapter(
         val restaurantPoster: ImageView =itemView.findViewById(R.id.restaurant_poster)
         val restaurantsName: TextView =itemView.findViewById(R.id.restaurent_name)
         val restaurantsAddress: TextView =itemView.findViewById(R.id.business_address)
+        val isRestaurantOpen:TextView=itemView.findViewById(R.id.is_open)
+        val restaurantRating:TextView=itemView.findViewById(R.id.business_rating)
+        val category:TextView=itemView.findViewById(R.id.category)
         val view=itemView
     }
 }

@@ -57,6 +57,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searched_data"
                 android:visibility="gone"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -72,6 +73,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="10dp"
                 android:id="@+id/popular_restaurants"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -82,11 +84,12 @@
                 android:textColor="@color/black"
                 android:layout_marginStart="15dp"
                 android:textStyle="bold"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:textSize="20sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories"
+                android:overScrollMode="never"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
