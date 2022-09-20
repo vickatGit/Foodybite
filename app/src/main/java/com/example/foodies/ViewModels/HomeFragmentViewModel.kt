@@ -15,4 +15,10 @@ class HomeFragmentViewModel: ViewModel() {
         return dataRepo?.getFamousRestaurants()
     }
 
+    fun search(query: String): MutableLiveData<List<Businesse>>? {
+
+        return dataRepo?.search(query)
+
+    }
+
 }

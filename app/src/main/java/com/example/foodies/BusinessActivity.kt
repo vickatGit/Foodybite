@@ -84,7 +84,8 @@ class BusinessActivity : AppCompatActivity() {
                 businessImages.addAll(businessDetails.photos)
                 businessPhotoGalleryAdapter.notifyDataSetChanged()
                 businessRating.text = businessDetails.rating.toString()
-                businessAddress.text = businessDetails.location.display_address?.get(0)
+                val location=businessDetails.location
+                businessAddress.text = location.address1+", "+location.city + ", "+location.state
                 if (businessDetails.hours != null) {
                     Log.d("TAG", "onCreate: business opens at" + Gson().toJson(businessDetails.hours.get(0)))
                     businessTiming.text = businessTimingProcessor(businessDetails.hours.get(0))

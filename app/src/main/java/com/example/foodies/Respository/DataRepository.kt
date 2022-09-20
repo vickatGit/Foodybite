@@ -93,7 +93,7 @@ class DataRepository {
         val retro=RetroHelper.getInstance()
         val famousRestaurants=ArrayList<Businesse>(1)
         retro.create(BusinessFetcher::class.java)
-            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak","rating", arrayOf("hot_and_new"))
+            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak,restaurants","rating", arrayOf("hot_and_new"))
             .enqueue(object :Callback<BusinessModel>{
                 override fun onResponse(
                     call: Call<BusinessModel>,
@@ -230,7 +230,7 @@ class DataRepository {
 
     fun getCategoryData(category: String?): MutableLiveData<List<Businesse>> {
         val retro=RetroHelper.getInstance().create(BusinessFetcher::class.java)
-        category?.let { retro.search("Bearer $API_KEY", it,"San Francisco, CA").enqueue(object : Callback<BusinessModel>{
+        category?.let { retro.search("Bearer $API_KEY", it,"San Francisco, CA","restaurants").enqueue(object : Callback<BusinessModel>{
             override fun onResponse(call: Call<BusinessModel>, response: Response<BusinessModel>) {
                 if(response.isSuccessful) searchedBusinesses.postValue(response.body()?.businesses)
             }
@@ -239,6 +239,28 @@ class DataRepository {
 
 
         }) }
+        return searchedBusinesses
+    }
+
+    fun search(query: String): MutableLiveData<List<Businesse>> {
+        val retro=RetroHelper.getInstance().create(BusinessFetcher::class.java)
+        if(!query.isEmpty()) {
+            retro.search("Bearer $API_KEY", query, "San francisco, CA","restaurants")
+                .enqueue(object : Callback<BusinessModel> {
+                    override fun onResponse(
+                        call: Call<BusinessModel>,
+                        response: Response<BusinessModel>
+                    ) {
+                        Log.d(TAG, "onResponse: search $response")
+                        if (response.isSuccessful)
+                            searchedBusinesses.postValue(response.body()?.businesses)
+                    }
+
+                    override fun onFailure(call: Call<BusinessModel>, t: Throwable) {
+                        Log.d(TAG, "onFailure: to search ")
+                    }
+                })
+        }
         return searchedBusinesses
     }
 }

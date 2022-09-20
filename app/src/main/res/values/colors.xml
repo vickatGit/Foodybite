@@ -10,4 +10,5 @@
     <color name="app_dark">#222455</color>
     <color name="app_medium">#6e7faa</color>
     <color name="app_light">#5663ff</color>
+    <color name="app_bg_color">#FDFDFD</color>
 </resources>

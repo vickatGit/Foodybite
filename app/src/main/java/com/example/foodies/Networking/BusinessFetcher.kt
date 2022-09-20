@@ -14,7 +14,8 @@ interface BusinessFetcher {
     fun search(
         @Header("Authorization") authHeader: String,
         @Query("term") searchQuery:String,
-        @Query("location") location:String
+        @Query("location") location:String,
+        @Query("categories") category: String
     ): Call<BusinessModel>
 
     @GET("businesses/search")
