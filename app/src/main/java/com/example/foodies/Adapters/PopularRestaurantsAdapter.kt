@@ -58,6 +58,7 @@ class PopularRestaurantsAdapter(
         holder.view.setOnClickListener {
             val intent=Intent(holder.view.context,BusinessActivity::class.java)
             intent.putExtra(BUSINESS_BRIDGE,popularRestaurants.get(position))
+            intent.putExtra(FavouritesAdapter.IS_FAVOURITE_ADAPTER,false)
             intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
             context?.startActivity(intent)
         }

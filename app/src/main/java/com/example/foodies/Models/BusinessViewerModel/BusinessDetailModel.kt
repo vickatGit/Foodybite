@@ -6,10 +6,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class BusinessDetailModel(
     val alias: String,
-    val categories: List<Category>,
+    val categories: List<Category>?,
     val coordinates: Coordinates,
     val display_phone: String,
-    val hours: List<Hour>,
+    val hours: List<Hour>?,
     val id: String,
     val image_url: String,
     val is_claimed: Boolean,
@@ -17,11 +17,11 @@ data class BusinessDetailModel(
     val location: Location,
     val name: String,
     val phone: String,
-    val photos: List<String>,
-    val price: String,
+    val photos: List<String>?,
+    val price: String?,
     val rating: Double,
     val review_count: Int,
-    val special_hours: List<SpecialHour>,
-    val transactions: List<String>,
+    val special_hours: List<SpecialHour>?,
+    val transactions: List<String>?,
     val url: String
 ) : Parcelable

@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class Hour(
     val hours_type: String,
     val is_open_now: Boolean,
-    val `open`: List<Open>
+    val `open`: List<Open>?
 ) : Parcelable

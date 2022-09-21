@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:fontFamily="@font/jodefin_bold"
         android:padding="10dp"
         android:text="Reviews &amp; Ratings"
         android:textColor="@color/black"
@@ -96,6 +97,7 @@
         android:text="Rate your experiance"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
+        android:fontFamily="@font/josefin_regular"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/rating_card"
         app:layout_constraintStart_toStartOf="@+id/rating_card"
@@ -112,6 +114,7 @@
         android:lines="10"
         android:layout_margin="20dp"
         android:paddingStart="20dp"
+        android:fontFamily="@font/josefin_regular"
         android:paddingEnd="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -135,6 +138,7 @@
         android:background="@drawable/activity_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/jodefin_bold"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 

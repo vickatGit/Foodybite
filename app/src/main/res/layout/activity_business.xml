@@ -27,6 +27,7 @@
                 app:collapsedTitleTextColor="@color/black"
                 app:contentScrim="@color/white"
                 app:expandedTitleTextColor="@color/white"
+
                 app:layout_scrollFlags="exitUntilCollapsed|scroll"
                 app:title="Restaurant Name">
 
@@ -45,6 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:elevation="0dp"
+
                     android:theme="@style/toolbar_icon_color"
                     app:itemIconTint="@color/white"
                     app:layout_collapseMode="pin">
@@ -116,6 +118,7 @@
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
+                            android:layout_gravity="center"
                             android:scaleType="fitCenter"
                             android:src="@drawable/star" />
 
@@ -124,6 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.5"
+                            android:fontFamily="@font/josefin_regular"
                             android:textColor="@color/black" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </com.google.android.material.card.MaterialCardView>
@@ -137,6 +141,7 @@
                     android:ellipsize="marquee"
                     android:maxWidth="220dp"
                     android:singleLine="true"
+                    android:fontFamily="@font/josefin_regular"
                     android:text="394 Br4oome st, New York, NY 10013, USA"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -149,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="Open Now"
+                    android:fontFamily="@font/josefin_regular"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="17sp"
                     android:textStyle="bold"
@@ -162,6 +168,7 @@
                     android:layout_marginStart="7dp"
                     android:text="daily time"
                     android:textStyle="bold"
+                    android:fontFamily="@font/josefin_regular"
                     app:layout_constraintBottom_toBottomOf="@+id/is_open"
                     app:layout_constraintStart_toEndOf="@+id/is_open"
                     app:layout_constraintTop_toTopOf="@+id/is_open" />
@@ -174,6 +181,7 @@
                     android:text="9:30 am to 11:00 pm"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="17sp"
+                    android:fontFamily="@font/josefin_regular"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView6"
                     app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -189,6 +197,7 @@
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/jodefin_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/is_open" />
 
@@ -212,6 +221,7 @@
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/jodefin_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/business_photos" />
 
@@ -254,6 +264,7 @@
         android:textAllCaps="false"
         android:textSize="19sp"
         android:textStyle="bold"
+        android:fontFamily="@font/jodefin_bold"
         android:background="@drawable/activity_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

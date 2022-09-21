@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodies.Adapters.BusinessPhotoGalleryAdapter
 import com.example.foodies.Adapters.BusinessReviewsAdapter
+import com.example.foodies.Adapters.FavouritesAdapter
 import com.example.foodies.Adapters.PopularRestaurantsAdapter
 import com.example.foodies.Models.BusinessReviewModel.Review
 import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
@@ -51,6 +52,9 @@ class BusinessActivity : AppCompatActivity() {
     private lateinit var businessDetails: BusinessDetailModel
     private lateinit var rateExperiance: Button
     private lateinit var userId:String
+    private lateinit var business:CommonBusiness
+
+
 
     companion object {
         val REVIEWS_BRIDGE = "reviews_passer_message"
@@ -61,7 +65,14 @@ class BusinessActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_business)
         viewModel = ViewModelProvider(this).get(BusinessActivityViewModel::class.java)
-        val business = intent.getParcelableExtra<Businesse>(PopularRestaurantsAdapter.BUSINESS_BRIDGE)
+        val isfavouriteAdapter=intent.getBooleanExtra(FavouritesAdapter.IS_FAVOURITE_ADAPTER,false)
+        if(isfavouriteAdapter==true){
+            businessDetails= intent.getParcelableExtra<BusinessDetailModel>(FavouritesAdapter.BUSINESS_BRIDGE)!!
+            business= CommonBusiness(businessDetails.id,businessDetails.image_url,businessDetails.is_closed,businessDetails.name)
+        }else {
+            val businesse = intent.getParcelableExtra<Businesse>(PopularRestaurantsAdapter.BUSINESS_BRIDGE)!!
+            business= CommonBusiness(businesse.id,businesse.image_url,businesse.is_closed,businesse.name)
+        }
         userId=intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
         initialise()
 
@@ -81,14 +92,14 @@ class BusinessActivity : AppCompatActivity() {
             if (it != null) {
                 businessDetails = it
                 businessImages.clear()
-                businessImages.addAll(businessDetails.photos)
+                businessImages.addAll(businessDetails.photos!!)
                 businessPhotoGalleryAdapter.notifyDataSetChanged()
                 businessRating.text = businessDetails.rating.toString()
                 val location=businessDetails.location
                 businessAddress.text = location.address1+", "+location.city + ", "+location.state
                 if (businessDetails.hours != null) {
-                    Log.d("TAG", "onCreate: business opens at" + Gson().toJson(businessDetails.hours.get(0)))
-                    businessTiming.text = businessTimingProcessor(businessDetails.hours.get(0))
+                    Log.d("TAG", "onCreate: business opens at" + Gson().toJson(businessDetails.hours!!.get(0)))
+                    businessTiming.text = businessTimingProcessor(businessDetails.hours!!.get(0))
                 }else{ businessTiming.text="N/A"}
             }
         })
@@ -151,11 +162,11 @@ class BusinessActivity : AppCompatActivity() {
 
     private fun businessTimingProcessor(hour: Hour): String {
 
-        val start = hour.open.get(0).start
+        val start = hour.open?.get(0)!!.start
         var successor = ""
         if (start.substring(2, 4).toInt() % 60 == 0) successor = "0"
         val startHour = (start.substring(0, 2).toInt() % 12).toString() + ":" + (start.substring(2, 4).toInt() % 60).toString() + "$successor am"
-        val end = hour.open.get(0).end
+        val end = hour.open?.get(0).end
         successor = ""
         if (end.substring(2, 4).toInt() % 60 == 0) successor = "0"
         val endHour = (end.substring(0, 2).toInt() % 12).toString() + ":" + (end.substring(2, 4).toInt() % 60).toString() + "$successor pm"
@@ -178,4 +189,6 @@ class BusinessActivity : AppCompatActivity() {
         rateExperiance=findViewById(R.id.rate_experiance)
 
     }
+
+    data class CommonBusiness(val id:String?,val image_url:String?,val is_closed:Boolean?,val name:String?)
 }

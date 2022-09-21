@@ -24,6 +24,7 @@
         android:gravity="center"
         android:text="Category"
         android:textColor="@color/white"
+        android:fontFamily="@font/jodefin_bold"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/category_poster"

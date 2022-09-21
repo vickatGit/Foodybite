@@ -12,7 +12,6 @@ import com.example.foodies.Models.Businesse
 import com.example.foodies.Models.UserModel
 import com.example.foodies.Networking.BusinessFetcher
 import com.example.foodies.Networking.RetroHelper
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
@@ -37,9 +36,9 @@ class DataRepository {
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
     val dbReviews:MutableLiveData<List<Review>> = MutableLiveData()
     val isReviewSaved:MutableLiveData<Boolean> = MutableLiveData()
-    val userFavouriteBusinesses:MutableLiveData<List<String>> = MutableLiveData()
+    val userFavouriteBusinessesIds:MutableLiveData<List<String>> = MutableLiveData()
     val userInfo:MutableLiveData<UserModel> = MutableLiveData()
-
+    val userFavouritesBusinesses:MutableLiveData<List<BusinessDetailModel>> = MutableLiveData()
     companion object{
         val TAG="tag"
         private var dataRepo:DataRepository= DataRepository()
@@ -205,7 +204,7 @@ class DataRepository {
 
     fun removeBusinessFromFavourites(businessId: String?, userId: String) {
         db.collection("Users").document(userId).collection("favourite_businesses")
-            .whereEqualTo("business_id", businessId).get().addOnCompleteListener {
+            .whereEqualTo("business_id", businessId).get().addOnCompleteListener{
                 it.result.documents.forEach {
                     db.collection("Users").document(userId).collection("favourite_businesses")
                         .document(it.id).delete()
@@ -214,17 +213,21 @@ class DataRepository {
 
     }
 
-    fun getUserFavouriteBusineses(userId: String): MutableLiveData<List<String>> {
-        val favouriteBusinesses=ArrayList<String>(1)
-        db.collection("Users").document(userId).collection("favourite_businesses").get().addOnCompleteListener {
-            if(it.isSuccessful){
-                it.result.documents.forEach {
-                    favouriteBusinesses.add(it.get("business_id").toString())
+    fun getUserFavouriteBusinesesIds(userId: String): MutableLiveData<List<String>> {
+        val favouriteBusinesses= HashMap<String,String>()
+
+        db.collection("Users").document(userId).collection("favourite_businesses")
+            .addSnapshotListener { value, error ->
+                favouriteBusinesses.clear()
+                value?.documents?.forEach {
+                    favouriteBusinesses.put(it.get("business_id").toString(),it.get("business_id").toString())
+                    Log.d(TAG, "getUserFavouriteBusinesesIds: ${it.get("business_id")}")
                 }
-                userFavouriteBusinesses.postValue(favouriteBusinesses)
-            }
+                val favs=ArrayList<String>(1)
+                favs.addAll(favouriteBusinesses.values)
+                userFavouriteBusinessesIds.postValue(favs)
         }
-        return userFavouriteBusinesses
+        return userFavouriteBusinessesIds
 
     }
 
@@ -263,4 +266,29 @@ class DataRepository {
         }
         return searchedBusinesses
     }
+
+    fun getFavourites(userId: String, favouriteIds: ArrayList<String>): MutableLiveData<List<BusinessDetailModel>> {
+        val favorites = ArrayList<BusinessDetailModel>(0)
+        val retro = RetroHelper.getInstance().create(BusinessFetcher::class.java)
+        favouriteIds.forEach {
+            retro.getBusiness("Bearer $API_KEY", it)
+                .enqueue(object : Callback<BusinessDetailModel> {
+                    override fun onResponse(call: Call<BusinessDetailModel>, response: Response<BusinessDetailModel>) {
+                        response.body()?.let { it1 -> favorites.add(it1) }
+                        Log.d(TAG, "onResponse: ${response}")
+                        userFavouritesBusinesses.postValue(favorites)
+                    }
+
+                    override fun onFailure(call: Call<BusinessDetailModel>, t: Throwable) {
+                        Log.d(TAG, "onFailure: ${t.localizedMessage}")
+                    }
+
+                })
+        }
+        return userFavouritesBusinesses
+
+    }
+
+
+
 }

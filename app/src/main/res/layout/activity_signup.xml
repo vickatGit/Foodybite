@@ -53,7 +53,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/josefin_regular"
                         android:textColor="@color/white"
                         android:background="@drawable/transparent_edit_text"
                         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/josefin_regular"
                         android:textColor="@color/white"
                         android:background="@drawable/transparent_edit_text"
                         android:layout_height="wrap_content"
@@ -116,9 +116,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password"
                         android:layout_width="match_parent"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:inputType="textPassword"
+                        android:fontFamily="@font/josefin_regular"
                         android:background="@drawable/transparent_edit_text"
                         android:layout_height="wrap_content"
                         />
@@ -148,7 +148,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/confirm_password"
                         android:layout_width="match_parent"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/josefin_regular"
                         android:textColor="@color/white"
                         android:inputType="textPassword"
                         android:background="@drawable/transparent_edit_text"
@@ -164,8 +164,10 @@
                 android:backgroundTint="@color/app_light"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
+                android:fontFamily="@font/jodefin_bold"
                 android:layout_marginTop="60dp"
                 android:text="Register"
+                android:textSize="18sp"
                 android:textAllCaps="false"
                 android:padding="17dp"
                 app:cornerRadius="10dp"/>
@@ -177,6 +179,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefin_semibold"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:text="Already have an account?"/>
@@ -190,6 +193,7 @@
                     android:textStyle="bold"
                     android:textColor="#414BAF"
                     android:minWidth="0dp"
+                    android:fontFamily="@font/josefin_semibold"
                     android:textAllCaps="false"
 
                     android:textSize="15sp"/>

@@ -24,13 +24,14 @@
             android:background="@drawable/category_bg"
             android:gravity="center"
             android:text="Indian"
+            android:fontFamily="@font/jodefin_bold"
             android:singleLine="true"
             android:paddingStart="7dp"
             android:paddingEnd="7dp"
             android:maxWidth="80dp"
             android:textColor="@color/white"
             android:textSize="21sp"
-            android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

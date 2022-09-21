@@ -50,7 +50,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/josefin_regular"
                     android:textColor="@color/white"
                     android:background="@drawable/transparent_edit_text"
                     android:layout_height="wrap_content" />
@@ -80,7 +80,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/josefin_regular"
                     android:textColor="@color/white"
                     android:inputType="textPassword"
                     android:background="@drawable/transparent_edit_text"
@@ -94,6 +94,7 @@
             android:visibility="invisible"
             android:layout_marginTop="7dp"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/josefin_regular"
             android:layout_height="wrap_content"
             android:text="incorrect information"
             android:textColor="@android:color/holo_red_dark"
@@ -109,6 +110,8 @@
             android:layout_marginEnd="50dp"
             android:layout_marginTop="50dp"
             android:text="Login"
+            android:fontFamily="@font/jodefin_bold"
+            android:textSize="18sp"
             android:textAllCaps="false"
             android:padding="17dp"
             app:cornerRadius="10dp"/>
@@ -118,7 +121,7 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:text="Create New Account"
-
+            android:fontFamily="@font/josefin_regular"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"/>

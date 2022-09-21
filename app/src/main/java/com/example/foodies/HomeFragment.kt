@@ -123,5 +123,6 @@ class HomeFragment : Fragment() {
         categoriesRecycler=view.findViewById(R.id.categories)
         val textView:TextView = searcher.findViewById(androidx.appcompat.R.id.search_src_text);
         textView.setTextColor(Color.GRAY);
+
     }
 }
