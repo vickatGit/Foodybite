@@ -1,5 +1,6 @@
 package com.example.foodies
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodies.Adapters.CategoryAdapter
@@ -41,14 +43,24 @@ class HomeFragment : Fragment() {
     private lateinit var searchedDataAdapter: SearchedDataAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance=true
         viewModel=ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        val intent= Intent()
+        intent.setAction(HomeActivity.BOTTOM_NAV_UPDATER)
+        intent.putExtra(HomeActivity.BOTTOM_NAV_UPDATER,0)
+        LocalBroadcastManager.getInstance(this.requireContext()).sendBroadcast(intent)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("TAG", "onCreateView: homefragment")
+
+
         val view=inflater.inflate(R.layout.fragment_home, container, false)
         userId=arguments?.getString(MainActivity.USER_ID_BRIDGE).toString()
         initialise(view)
@@ -89,6 +101,7 @@ class HomeFragment : Fragment() {
                     searchedDataRecycler.visibility = View.VISIBLE
                 }
                 else {
+                    searchedDataRecycler.visibility = View.GONE
                 }
                 return true
 
@@ -100,6 +113,7 @@ class HomeFragment : Fragment() {
                 if(newText?.isEmpty() == true) {
                     searchedDataRecycler.visibility = View.GONE
                     searchedData.clear()
+                }else{
                 }
                 return true
             }
@@ -108,7 +122,6 @@ class HomeFragment : Fragment() {
 
         searchCard.setOnClickListener {
             searcher.isIconified=false
-            searchedDataRecycler.visibility=View.VISIBLE
         }
 
         return view

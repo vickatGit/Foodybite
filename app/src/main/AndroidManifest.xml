@@ -3,6 +3,7 @@
     package="com.example.foodies">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,8 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodies">
         <activity
-            android:name=".CategoryBusinesses"
+            android:name=".FriendsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/Theme.Foodies.NoActionBar" />
+        <activity
+            android:name=".CategoryBusinesses"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RatingReviewActivity"
             android:exported="false" />
@@ -25,16 +35,21 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Signup_Activity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

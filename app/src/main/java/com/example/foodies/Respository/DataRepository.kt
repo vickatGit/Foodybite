@@ -1,5 +1,7 @@
 package com.example.foodies.Respository
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import at.favre.lib.crypto.bcrypt.BCrypt
@@ -9,11 +11,13 @@ import com.example.foodies.Models.BusinessReviewModel.Review
 import com.example.foodies.Models.BusinessReviewModel.User
 import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
 import com.example.foodies.Models.Businesse
+import com.example.foodies.Models.FollowingModels.FollowingModel
 import com.example.foodies.Models.UserModel
 import com.example.foodies.Networking.BusinessFetcher
 import com.example.foodies.Networking.RetroHelper
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,14 +25,19 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 
 class DataRepository {
     private val API_KEY="cfo72-p8TKk8JVCClHts2-F2aLDHmaitKVgmwW47YsXUZMpuos_hWoM_0iESLi7mmelKnQeVZLLoEp3eDK7pPO-v5m1AMxIra57QJ6LgdYRfbvejxnx6gWlWXXccY3Yx"
 
     private val db=FirebaseFirestore.getInstance()
+    private val dbStorage=FirebaseStorage.getInstance()
     private val isEmailAlreadyExists:MutableLiveData<Boolean> = MutableLiveData()
     val isUserExist:MutableLiveData<String> = MutableLiveData()
     private val isUserCreated:MutableLiveData<String> = MutableLiveData()
+    private var userProfilePic:MutableLiveData<Uri?> = MutableLiveData()
+    private var User:MutableLiveData<UserModel> = MutableLiveData()
+    private var AllFriends:MutableLiveData<List<UserModel>> = MutableLiveData()
 
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
     val searchedBusinesses:MutableLiveData<List<Businesse>> = MutableLiveData()
@@ -38,6 +47,9 @@ class DataRepository {
     val isReviewSaved:MutableLiveData<Boolean> = MutableLiveData()
     val userFavouriteBusinessesIds:MutableLiveData<List<String>> = MutableLiveData()
     val userInfo:MutableLiveData<UserModel> = MutableLiveData()
+    val IsUserFollowing:MutableLiveData<Boolean> = MutableLiveData()
+    val followerIds:MutableLiveData<List<String>> = MutableLiveData()
+    val followingIds:MutableLiveData<List<String>> = MutableLiveData()
     val userFavouritesBusinesses:MutableLiveData<List<BusinessDetailModel>> = MutableLiveData()
     companion object{
         val TAG="tag"
@@ -62,6 +74,15 @@ class DataRepository {
 
     }
 
+    fun getUser(userId:String): MutableLiveData<UserModel> {
+        db.collection("Users").document(userId).get().addOnCompleteListener {
+            if(it.isSuccessful){
+                val user=UserModel(it.result.get("username").toString(),it.result.get("email").toString(),null,null,null)
+                User.postValue(user)
+            }
+        }
+        return User
+    }
     fun isEmailAlreayExists(email: String): MutableLiveData<Boolean> {
         db.collection("Users").whereEqualTo("email",email).get().addOnCompleteListener {
             if(it.isSuccessful) {
@@ -174,7 +195,7 @@ class DataRepository {
         db.collection("Users").document(userId).get().addOnCompleteListener {
             if(it.isSuccessful){
                 val user:UserModel= UserModel(it.result.get("username").toString(),it.result.getString("email").toString()
-                    ,null,userId, it.result.get("user_image_url") as String?)
+                    ,null,userId, it.result.get("userImage") as String?)
                 userInfo.postValue(user)
             }
         }
@@ -182,7 +203,7 @@ class DataRepository {
     }
 
     fun getBusinessReviewsFromDatabase(businessId: String?): MutableLiveData<List<Review>> {
-        val userReviews=ArrayList<Review>(1)
+        val userReviews= ArrayList<Review>(1)
         db.collection("Reviews").whereEqualTo("id",businessId).addSnapshotListener { value, error ->
             userReviews.clear()
             value?.documents?.forEach {
@@ -271,10 +292,12 @@ class DataRepository {
         val favorites = ArrayList<BusinessDetailModel>(0)
         val retro = RetroHelper.getInstance().create(BusinessFetcher::class.java)
         favouriteIds.forEach {
+            Log.d(TAG, "getFavourites: loop")
             retro.getBusiness("Bearer $API_KEY", it)
                 .enqueue(object : Callback<BusinessDetailModel> {
                     override fun onResponse(call: Call<BusinessDetailModel>, response: Response<BusinessDetailModel>) {
                         response.body()?.let { it1 -> favorites.add(it1) }
+                        Log.d(TAG, "getFavourites: ")
                         Log.d(TAG, "onResponse: ${response}")
                         userFavouritesBusinesses.postValue(favorites)
                     }
@@ -289,6 +312,122 @@ class DataRepository {
 
     }
 
+    fun storeUserProfilePic(userId: String, bitmap: Bitmap?, filePath: Uri?) {
+        val byteStream=ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG,50,byteStream)
+        if (filePath != null) {
+            dbStorage.reference.child("User Profile Images/$userId profile_pic").putFile(filePath).addOnSuccessListener {
+                Log.d(TAG, "storeUserProfilePic: Profile pic is upload successfully")
+                dbStorage.reference.child("User Profile Images/$userId profile_pic").downloadUrl.addOnSuccessListener {
+                    Log.d(TAG, "storeUserProfilePic: $it")
+                    db.collection("Users").document(userId).update("userImage", it)
+                }
+            }
+        }
+    }
+    fun getUserProfilePic(userId: String): MutableLiveData<Uri?> {
+        var userPicUrl:Uri?
+        val file=dbStorage.reference.child("User Profile Images/$userId profile_pic").downloadUrl
+            .addOnSuccessListener {
+            userPicUrl=it
+            userProfilePic.postValue(userPicUrl)
+        }.addOnFailureListener{
+            userProfilePic.postValue(null)
+        }
+        return userProfilePic
+    }
+
+    fun getUserReviewedBusinesses(userId: String): MutableLiveData<List<BusinessDetailModel>> {
+        val busIds= HashMap<String,String>()
+        db.collection("Reviews").whereEqualTo("url",userId).get().addOnCompleteListener {
+            Log.d(TAG, "getUserReviewedBusinesses: $userId ${it.result.size()}")
+            it.result.forEach {
+                val bus_id=it.get("id").toString()
+                busIds.put(bus_id,bus_id)
+            }
+            getFavourites(userId, ArrayList(busIds.values))
+
+        }
+        return getFavourites(userId,ArrayList(busIds.values))
+    }
+
+    fun followUser(userId: String, friendId: String) {
+        val userFollows=FollowingModel(userId,friendId)
+        db.collection("UserFollowings").document().set(userFollows, SetOptions.merge()).addOnSuccessListener {
+            Log.d(TAG, "followUser: $userId is now following $friendId")
+        }.addOnFailureListener {
+            Log.d(TAG, "followUser: $userId is failed to follow $friendId")
+        }
+    }
+    fun getFollowersIds(userId:String): MutableLiveData<List<String>> {
+        val followersIds=ArrayList<String>(1)
+        db.collection("UserFollowings").whereEqualTo("follows",userId).addSnapshotListener { value, error ->
+            value?.documents?.forEach {
+                followersIds.add(it.get("follower").toString())
+            }
+            followerIds.postValue(followersIds)
+        }
+        return followerIds
+    }
+    fun isUserFollowing(userId: String, friendId: String): MutableLiveData<Boolean> {
+        db.collection("UserFollowings").whereEqualTo("follower", userId)
+            .whereEqualTo("follows", friendId).get()
+            .addOnSuccessListener {
+                Log.d(TAG, "isUserFollowing: ${it.documents.size}")
+                if(it.documents.size>0) {
+                    IsUserFollowing.postValue(true)
+                }
+                else
+                    IsUserFollowing.postValue(false)
+            }
+        return IsUserFollowing
+    }
+    fun unfollowUser(userId: String, friendId: String) {
+        db.collection("UserFollowings").whereEqualTo("follower", userId)
+            .whereEqualTo("follows", friendId).get()
+            .addOnSuccessListener {
+                it.documents.forEach {
+                    db.collection("UserFollowings").document(it.id).delete().addOnSuccessListener {
+                        Log.d(TAG, "unfollowUser: $userId unfollows $friendId  (deletion is complete)")
+                    }.addOnFailureListener{
+                        Log.d(TAG, "unfollowUser: $userId failed unfollow $friendId   (deletion is inComplete)")
+                    }
+                }
+            }
+    }
+
+    fun getUserFollowing(userId: String): MutableLiveData<List<String>> {
+        val followingsIds=ArrayList<String>(1)
+        db.collection("UserFollowings").whereEqualTo("follower",userId).addSnapshotListener { value, error ->
+            value?.documents?.forEach {
+                followingsIds.add(it.get("follows").toString())
+            }
+            followingIds.postValue(followingsIds)
+        }
+        return followingIds
+    }
+
+    fun getFriends(friendsListIds: ArrayList<String>): MutableLiveData<List<UserModel>> {
+        val Users=ArrayList<UserModel>(1)
+        friendsListIds.forEach {
+            db.collection("Users").document(it).get().addOnCompleteListener {
+                if(it.isSuccessful){
+                    val user = UserModel(
+                        it.result.get("username").toString(),
+                        it.result.get("email").toString(),
+                        null,
+                        it.result.get("userRef").toString(),
+                        it.result.get("userImage").toString()
+                    )
+                    Users.add(user)
+                    AllFriends.postValue(Users)
+                }
+            }
+        }
+        return AllFriends
+
+
+    }
 
 
 }

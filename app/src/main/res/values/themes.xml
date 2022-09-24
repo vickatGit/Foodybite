@@ -14,27 +14,42 @@
         <!-- Customize your theme here. -->
     </style>
 
-<!--    <style name="HelperTextAppearance" parent="TextAppearance.AppCompat">-->
-<!--        <item name="colorAccent">@android:color/white</item>-->
-<!--        <item name="android:textColorHint">@color/white</item>-->
-<!--        <item name="colorControlNormal">@color/white</item>-->
-<!--        <item name="colorControlActivated">@color/white</item>-->
-<!--        <item name="colorControlHighlight">@color/white</item>-->
-<!--    </style>-->
+    <!--    <style name="HelperTextAppearance" parent="TextAppearance.AppCompat">-->
+    <!--        <item name="colorAccent">@android:color/white</item>-->
+    <!--        <item name="android:textColorHint">@color/white</item>-->
+    <!--        <item name="colorControlNormal">@color/white</item>-->
+    <!--        <item name="colorControlActivated">@color/white</item>-->
+    <!--        <item name="colorControlHighlight">@color/white</item>-->
+    <!--    </style>-->
     <style name="HelperTextAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
-        <item name="colorAccent">@color/black</item>  // Text Color
-        <item name="android:textColorHint">@color/white</item>    // Hint Color
-        <item name="colorControlActivated">@color/white</item>    //Floating label color
+        <item name="colorAccent">@color/black</item>
+        // Text Color
+        <item name="android:textColorHint">@color/white</item>
+        // Hint Color
+        <item name="colorControlActivated">@color/white</item>
+        //Floating label color
     </style>
+
     <style name="BottomTheme" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/app_light</item>
         <item name="colorPrimaryDark">@color/app_dark</item>
         <item name="colorAccent">@color/app_light</item>
     </style>
+
     <style name="input_cursor_style" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="autoCompleteTextViewStyle">@style/input_cursor_style</item>
     </style>
+
     <style name="toolbar_icon_color" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <item name="colorOnPrimary">@color/white</item>
     </style>
+
+    <style name="Theme.Foodies.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Foodies.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Foodies.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

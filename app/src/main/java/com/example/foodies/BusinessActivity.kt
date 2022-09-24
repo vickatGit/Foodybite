@@ -27,8 +27,6 @@ import com.example.foodies.ViewModels.BusinessActivityViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 class BusinessActivity : AppCompatActivity() {
@@ -84,7 +82,7 @@ class BusinessActivity : AppCompatActivity() {
         businessName.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
         businessPhotoGalleryRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         businessReviewsRecycler.layoutManager = LinearLayoutManager(this)
-        businessReviewsAdapter = BusinessReviewsAdapter(businessReviews, true)
+        businessReviewsAdapter = BusinessReviewsAdapter(businessReviews, true,userId,viewModel,this)
         businessReviewsRecycler.adapter = businessReviewsAdapter
         businessPhotoGalleryAdapter = BusinessPhotoGalleryAdapter(businessImages)
         businessPhotoGalleryRecycler.adapter = businessPhotoGalleryAdapter
@@ -142,6 +140,7 @@ class BusinessActivity : AppCompatActivity() {
             "closed"
         seeAllReviews.setOnClickListener {
             val intent = Intent(this, AllReviewsActivity::class.java)
+            intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
             intent.putExtra(REVIEWS_BRIDGE, businessReviews)
             startActivity(intent)
         }

@@ -1,5 +1,6 @@
 package com.example.foodies.ViewModels
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodies.Models.BusinessReviewModel.BusinessReviewsModel
@@ -20,6 +21,9 @@ class BusinessActivityViewModel: ViewModel() {
     fun getBusinessReviews(id: String?): MutableLiveData<BusinessReviewsModel>? {
         return dataRepo?.getBusinessReviews(id)
 
+    }
+    fun getUserProfilePic(userId: String): MutableLiveData<Uri?>? {
+        return dataRepo?.getUserProfilePic(userId)
     }
 
     fun getBusinessReviewsFromDatabase(id: String?): MutableLiveData<List<Review>>? {

@@ -140,6 +140,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:paddingStart="10dp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
                 android:paddingEnd="10dp"
                 android:paddingTop="2dp"
                 android:fontFamily="@font/josefin_regular"

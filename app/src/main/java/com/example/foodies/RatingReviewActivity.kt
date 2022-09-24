@@ -70,23 +70,19 @@ class RatingReviewActivity : AppCompatActivity() {
                 ratingcard.visibility=View.INVISIBLE
                 review.visibility=View.INVISIBLE
 
-                val userReview=Review(businessId!!, rating!!.toInt(),review.text.toString(),Date().toString(),null, User(userId,userInfo.userImage,userInfo.username,null))
-//                val experience=hashMapOf(
-//                    "business_id" to businessId,
-//                    "rating" to rating.toString(),
-//                    "review" to review.text.toString(),
-//                    "user_id" to userId
-//                )
+                val userReview=Review(businessId!!, rating!!.toInt(),review.text.toString(),Date().toString(),userId, User(userId,userInfo.userImage,userInfo.username,userInfo.userImage))
                 viewModel.saveReview(userReview,userId)?.observe(this, Observer {
                     if(it==true){
                         Toast.makeText(this,"Review Posted",Toast.LENGTH_SHORT)
                         progress.visibility= View.INVISIBLE
                         ratingcard.visibility=View.VISIBLE
                         review.visibility=View.VISIBLE
+                        finish()
                     }else{
                         progress.visibility= View.INVISIBLE
                         ratingcard.visibility=View.VISIBLE
                         review.visibility=View.VISIBLE
+                        Toast.makeText(this,"Failed to post Review",Toast.LENGTH_SHORT)
                     }
                 })
             }
