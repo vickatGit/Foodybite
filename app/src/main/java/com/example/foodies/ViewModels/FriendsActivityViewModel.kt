@@ -21,5 +21,8 @@ class FriendsActivityViewModel: ViewModel() {
     fun unfollowUser(userId: String, friendId: String?) {
         dataRepo?.unfollowUser(userId,friendId!!)
     }
+    fun findUser(query: String?): MutableLiveData<List<UserModel>>? {
+        return dataRepo?.findUser(query)
+    }
 
 }

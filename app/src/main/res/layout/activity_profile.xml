@@ -18,17 +18,6 @@
             android:fitsSystemWindows="true"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/edit_profile"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Edit Profile"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayoutCompat"
-                app:layout_constraintStart_toStartOf="@+id/linearLayoutCompat"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
             <ToggleButton
                 android:id="@+id/follow"
                 android:visibility="visible"

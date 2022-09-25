@@ -37,13 +37,6 @@ class BusinessReviewsAdapter(
         holder.userReviewThumb.setSingleLine(isWholeReview)
         val reviews=this.reviews.get(position)
 
-//        userProfilePicGetter.getUserProfilePic(reviews.user.id)?.observe(lifecycle, Observer {
-//            Log.d("TAG", "onBindViewHolder: reviews $it")
-//            if(it!=null )
-//                Glide.with(holder.userProfile).load(it).into(holder.userProfile)
-//            else
-//                Glide.with(holder.userProfile).load(R.drawable.default_user_avatar).into(holder.userProfile)
-//        })
         if(reviews.user.image_url!=null && !reviews.user.image_url.isEmpty())
             Glide.with(holder.userProfile).load(reviews.user.image_url).into(holder.userProfile)
         else

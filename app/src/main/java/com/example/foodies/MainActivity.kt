@@ -16,11 +16,13 @@ class MainActivity : AppCompatActivity() {
         val userRef=getSharedPreferences(LOGIN_SHARED_PREFERENCES, MODE_PRIVATE).getString(USER_REFERENCE,null)
         if(userRef==null) {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
         else{
             val intent=Intent(this,HomeActivity::class.java)
             intent.putExtra(USER_ID_BRIDGE,userRef)
             startActivity(intent)
+            finish()
         }
 
     }

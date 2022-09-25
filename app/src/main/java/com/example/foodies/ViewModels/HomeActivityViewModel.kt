@@ -13,5 +13,8 @@ class HomeActivityViewModel: ViewModel() {
     fun getUserFavouriteBusineses(userId: String): MutableLiveData<List<String>>? {
         return dataRepo?.getUserFavouriteBusinesesIds(userId)
     }
+    fun getUserFollowing(userId: String): MutableLiveData<List<String>>? {
+        return dataRepo?.getUserFollowing(userId)
+    }
 
 }

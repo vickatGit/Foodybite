@@ -14,6 +14,7 @@
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/input_cursor_drawable.xml" value="0.1703125" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/notification_icon.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/review_input_bg.xml" value="0.1875" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/search.xml" value="0.1828125" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/transparent_edit_text.xml" value="0.2890625" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/drawable/user_icon.xml" value="0.17291666666666666" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/font/josefin_fonts.xml" value="0.303125" />
@@ -26,10 +27,12 @@
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_rating_review.xml" value="0.21" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_search_friend.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/activity_signup.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/business_gallery_image_layout.xml" value="0.14270833333333333" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/category_thumb_layout.xml" value="0.18" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/fragment_favorites.xml" value="0.25" />
+        <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/fragment_find_friend.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/friend_item.xml" value="0.27291666666666664" />
         <entry key="..\:/android studio/Foodies2/app/src/main/res/layout/full_restaurent_thumbnail_layout.xml" value="0.1375" />

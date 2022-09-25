@@ -111,6 +111,7 @@ class DataRepository {
 
     fun getFamousRestaurants(): MutableLiveData<List<Businesse>> {
         val retro=RetroHelper.getInstance()
+        Log.d(TAG, "getFamousRestaurants: ")
         val famousRestaurants=ArrayList<Businesse>(1)
         retro.create(BusinessFetcher::class.java)
             .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","indpak,restaurants","rating", arrayOf("hot_and_new"))
@@ -281,7 +282,7 @@ class DataRepository {
                     }
 
                     override fun onFailure(call: Call<BusinessModel>, t: Throwable) {
-                        Log.d(TAG, "onFailure: to search ")
+                        Log.d(TAG, "onFailure: to search $t")
                     }
                 })
         }
@@ -428,6 +429,31 @@ class DataRepository {
 
 
     }
+
+    fun findUser(query: String?): MutableLiveData<List<UserModel>> {
+        if(query?.isEmpty()==false) {
+            val Users = ArrayList<UserModel>(1)
+            db.collection("Users").whereEqualTo("username", query?.trim()).get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        it.result.documents.forEach {
+                            val user = UserModel(
+                                it.get("username").toString(),
+                                it.get("email").toString(),
+                                null,
+                                it.get("userRef").toString(),
+                                it.get("userImage").toString()
+                            )
+                            Users.add(user)
+                            AllFriends.postValue(Users)
+
+                        }
+                    }
+                }
+        }
+        return AllFriends
+    }
+
 
 
 }

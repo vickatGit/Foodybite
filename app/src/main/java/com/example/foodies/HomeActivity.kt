@@ -43,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
     companion object{
         val BOTTOM_NAV_UPDATER="updating_botttom_navigation"
         var userFavouriteBusinesses=ArrayList<String>(1)
+        var userFollowingIds=ArrayList<String>(1)
         val context=this
         val FAVOURITES_BRIDGE="favourites_passer"
         val HOME="home"
@@ -58,6 +59,13 @@ class HomeActivity : AppCompatActivity() {
         userId= intent.getStringExtra(MainActivity.USER_ID_BRIDGE).toString()
         initialise()
         viewModel=ViewModelProvider(this).get(HomeActivityViewModel::class.java)
+        viewModel.getUserFollowing(userId)?.observe(this, Observer {
+            Log.d("TAG", "onCreate: getUserFollowing $it")
+            if(it!=null){
+                userFollowingIds.clear()
+                userFollowingIds.addAll(it)
+            }
+        })
         viewModel.getUserFavouriteBusineses(userId)?.observe(this, Observer {
             if(it!=null) {
                 userFavouriteBusinesses.clear()
@@ -95,9 +103,24 @@ class HomeActivity : AppCompatActivity() {
                     intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
                     startActivity(intent)
                 }
+                R.id.search_friend -> {
+                    val frag=FindFriendFragment()
+                    val bundle=Bundle()
+                    bundle.putString(MainActivity.USER_ID_BRIDGE,userId)
+                    bundle.putStringArrayList(ProfileActivity.IS_USER_FOLLOWING_BRIDGE, userFollowingIds)
+                    bundle.putStringArrayList("users", userFollowingIds)
+                    frag.arguments=bundle
+                    supportFragmentManager.beginTransaction().replace(R.id.frag_placeholder,frag,"find_friend_fragment").addToBackStack(null).commit()
+                }
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentByTag("home_fragment")!=null)
+            finish()
+        super.onBackPressed()
     }
     fun initialise(){
         bottomNavigationView=findViewById(R.id.bottom_navigation_view)

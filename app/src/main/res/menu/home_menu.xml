@@ -11,13 +11,13 @@
         android:icon="@drawable/bookmark_icon"
         app:showAsAction="always"
         android:title="Bookmark" />
+<!--    <item-->
+<!--        android:id="@+id/useless"-->
+<!--        android:title="useless"-->
+<!--        android:enabled="false"/>-->
     <item
-        android:id="@+id/useless"
-        android:title="useless"
-        android:enabled="false"/>
-    <item
-        android:id="@+id/notification"
-        android:icon="@drawable/notification_icon"
+        android:id="@+id/search_friend"
+        android:icon="@drawable/search"
         app:showAsAction="always"
         android:title="Notifications" />
 

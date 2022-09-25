@@ -21,6 +21,7 @@ import com.example.foodies.Adapters.CategoryAdapter
 import com.example.foodies.Adapters.PopularRestaurantsAdapter
 import com.example.foodies.Adapters.SearchedDataAdapter
 import com.example.foodies.Models.Businesse
+import com.example.foodies.Respository.DataRepository
 import com.example.foodies.Static.CategoryDataSource
 import com.example.foodies.ViewModels.HomeFragmentViewModel
 import com.google.gson.Gson
@@ -81,6 +82,7 @@ class HomeFragment : Fragment() {
             if(it!=null){
                 popularRestaurants.clear()
                 popularRestaurants.addAll(it)
+                Log.d(DataRepository.TAG, "getFamousRestaurants: $it")
                 popularRestaurantsAdapter.notifyDataSetChanged()
             }
         })

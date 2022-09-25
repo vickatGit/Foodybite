@@ -11,16 +11,16 @@
         android:id="@+id/frag_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_anchor="@id/bottom_app_bar"
+        app:layout_anchor="@id/bottom_navigation_view"
         app:layout_anchorGravity="top"/>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        android:layout_width="match_parent"
-        app:fabCradleRoundedCornerRadius="20dp"
+<!--    <com.google.android.material.bottomappbar.BottomAppBar-->
+<!--        android:id="@+id/bottom_app_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:fabCradleRoundedCornerRadius="20dp"-->
 
-        android:layout_gravity="bottom"
-        android:layout_height="wrap_content">
+<!--        android:layout_gravity="bottom"-->
+<!--        android:layout_height="wrap_content">-->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
@@ -31,19 +31,20 @@
             app:itemIconTint="@color/app_light"
             app:labelVisibilityMode="unlabeled"
             android:theme="@style/BottomTheme"
+            android:layout_gravity="bottom"
             app:menu="@menu/home_menu" />
-    </com.google.android.material.bottomappbar.BottomAppBar>
+<!--    </com.google.android.material.bottomappbar.BottomAppBar>-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:tint="@color/white"
-        app:backgroundTint="@color/app_light"
-        app:fabSize="normal"
-        app:elevation="10dp"
-        app:layout_anchorGravity="center"
-        app:layout_anchor="@id/bottom_app_bar"
-        android:src="@drawable/add_icon"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/add"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:tint="@color/white"-->
+<!--        app:backgroundTint="@color/app_light"-->
+<!--        app:fabSize="normal"-->
+<!--        app:elevation="10dp"-->
+<!--        app:layout_anchorGravity="center"-->
+<!--        app:layout_anchor="@id/bottom_app_bar"-->
+<!--        android:src="@drawable/add_icon"/>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

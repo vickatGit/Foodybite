@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodies.Adapters.BusinessReviewsAdapter
 import com.example.foodies.Adapters.FavouritesAdapter
+import com.example.foodies.Adapters.FriendsAdapter
 import com.example.foodies.Models.BusinessReviewModel.Review
 import com.example.foodies.Models.BusinessViewerModel.BusinessDetailModel
 import com.example.foodies.ViewModels.ProfileActivityViewModel
@@ -42,6 +43,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var userId:String
     private lateinit var profileId:String
     private var otherUser: Review?=null
+    private var friendId: String?=null
     private var userFollowerIds=ArrayList<String>(1)
     private var userFollowingIds=ArrayList<String>(1)
     private lateinit var userReviewdBusinessesAdapter:FavouritesAdapter
@@ -51,6 +53,7 @@ class ProfileActivity : AppCompatActivity() {
 
     companion object{
         val FRIENDS_BRIDGE="friends_bridge"
+        val ACTIVITY_TYPE="activity_title_text"
         var IS_USER_FOLLOWING_BRIDGE="user_following_ids"
     }
 
@@ -128,6 +131,7 @@ class ProfileActivity : AppCompatActivity() {
             val intent=Intent(this,FriendsActivity::class.java)
             intent.putExtra(FRIENDS_BRIDGE,userFollowingIds)
             intent.putExtra(IS_USER_FOLLOWING_BRIDGE,userFollowingIds)
+            intent.putExtra(ACTIVITY_TYPE,"Following")
             intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
             startActivity(intent)
         }
@@ -135,6 +139,7 @@ class ProfileActivity : AppCompatActivity() {
             val intent=Intent(this,FriendsActivity::class.java)
             intent.putExtra(FRIENDS_BRIDGE,userFollowerIds)
             intent.putExtra(IS_USER_FOLLOWING_BRIDGE,userFollowingIds)
+            intent.putExtra(ACTIVITY_TYPE,"Follower")
             intent.putExtra(MainActivity.USER_ID_BRIDGE,userId)
             startActivity(intent)
         }
@@ -181,14 +186,12 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
     private fun MyProfile(id: String) {
-        editProfile.visibility= View.VISIBLE
         follow.visibility=View.INVISIBLE
         userProfile.isEnabled=true
         profileId=id
         profileTitle.text="My Profile"
     }
     private fun OthersProfile(id: String) {
-        editProfile.visibility= View.INVISIBLE
         follow.visibility=View.VISIBLE
         userProfile.isEnabled=false
         profileId=id
@@ -206,7 +209,6 @@ class ProfileActivity : AppCompatActivity() {
         followersContainer=findViewById(R.id.followers)
         followingContainer=findViewById(R.id.following)
         userEmail=findViewById(R.id.user_email)
-        editProfile=findViewById(R.id.edit_profile)
         follow=findViewById(R.id.follow)
     }
 }
