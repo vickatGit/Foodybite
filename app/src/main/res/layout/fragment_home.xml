@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:backgroundTint="@color/app_bg_color"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -98,6 +99,24 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/pubs_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pubs"
+                android:textColor="@color/black"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/jodefin_bold"
+                android:layout_marginTop="13dp"
+                android:textSize="20sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/pubs"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

@@ -7,9 +7,23 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/splash_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_screen_bg"
         android:scaleType="centerCrop"
+        android:src="@drawable/splash_screen_bg" />
+
+    <TextView
+        android:id="@+id/splash_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foodybite"
+        android:textColor="@color/app_dark"
+        android:textSize="50sp"
+        android:fontFamily="@font/jodefin_bold"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/splash_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

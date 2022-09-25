@@ -21,4 +21,8 @@ class HomeFragmentViewModel: ViewModel() {
 
     }
 
+    fun getPubs(): MutableLiveData<List<Businesse>>? {
+        return dataRepo?.getPubs()
+    }
+
 }

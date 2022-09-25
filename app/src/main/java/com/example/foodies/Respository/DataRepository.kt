@@ -40,6 +40,7 @@ class DataRepository {
     private var AllFriends:MutableLiveData<List<UserModel>> = MutableLiveData()
 
     val popularRestaurants:MutableLiveData<List<Businesse>> = MutableLiveData()
+    val popularBars:MutableLiveData<List<Businesse>> = MutableLiveData()
     val searchedBusinesses:MutableLiveData<List<Businesse>> = MutableLiveData()
     val businessDetails:MutableLiveData<BusinessDetailModel> = MutableLiveData()
     val businessReviews:MutableLiveData<BusinessReviewsModel> = MutableLiveData()
@@ -136,6 +137,35 @@ class DataRepository {
 
             })
         return popularRestaurants
+    }
+
+    fun getPubs(): MutableLiveData<List<Businesse>> {
+        val retro=RetroHelper.getInstance()
+        Log.d(TAG, "getFamousRestaurants: ")
+        val bars=ArrayList<Businesse>(1)
+        retro.create(BusinessFetcher::class.java)
+            .getPopularRestaurants("Bearer $API_KEY","San Francisco, CA","pubs" ,"rating", arrayOf(""))
+            .enqueue(object :Callback<BusinessModel>{
+                override fun onResponse(
+                    call: Call<BusinessModel>,
+                    response: Response<BusinessModel>
+                ) {
+                    Log.d(TAG, "onResponse: $response")
+                    if(response.isSuccessful){
+                        if(response.body()!=null){
+                            Log.d(TAG, "onResponse: "+Gson().toJson(response.body()))
+                            bars.addAll(response?.body()!!.businesses)
+                            popularBars.postValue(bars)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<BusinessModel>, t: Throwable) {
+                    Log.d(TAG, "onFailure: ${t.localizedMessage}")
+                }
+
+            })
+        return popularBars
     }
 
     fun getBusiness(id: String?): MutableLiveData<BusinessDetailModel> {

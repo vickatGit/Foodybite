@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodies.Adapters.CategoryAdapter
 import com.example.foodies.Adapters.PopularRestaurantsAdapter
+import com.example.foodies.Adapters.PubsAdapter
 import com.example.foodies.Adapters.SearchedDataAdapter
 import com.example.foodies.Models.Businesse
 import com.example.foodies.Respository.DataRepository
@@ -30,9 +31,12 @@ import com.google.gson.Gson
 class HomeFragment : Fragment() {
 
     private lateinit var popularRestaurantsRecycler:RecyclerView
+    private lateinit var popularPubsRecycler:RecyclerView
     private  var popularRestaurants=ArrayList<Businesse>(1)
+    private  var popularPubs=ArrayList<Businesse>(1)
     private  var searchedData=ArrayList<Businesse>(1)
     private lateinit var popularRestaurantsAdapter:PopularRestaurantsAdapter
+    private lateinit var popularPubsAdapter:PubsAdapter
     private lateinit var viewModel:HomeFragmentViewModel
     private lateinit var searchCard:CardView
     private lateinit var searcheProgress:ProgressBar
@@ -66,14 +70,19 @@ class HomeFragment : Fragment() {
         userId=arguments?.getString(MainActivity.USER_ID_BRIDGE).toString()
         initialise(view)
         popularRestaurantsRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
-        searchedDataRecycler.layoutManager=LinearLayoutManager(this.context)
+        popularPubsRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
         categoriesRecycler.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
+        searchedDataRecycler.layoutManager=LinearLayoutManager(this.context)
+
 
         popularRestaurantsAdapter=PopularRestaurantsAdapter(popularRestaurants, this.context, userId, false)
-        popularRestaurantsRecycler.adapter=popularRestaurantsAdapter
+        popularPubsAdapter=PubsAdapter(popularPubs, this.context, userId, false)
         categoryAdapter= CategoryAdapter(CategoryDataSource.categoriesInitialiser(),userId,this.requireContext())
-        categoriesRecycler.adapter=categoryAdapter
         searchedDataAdapter=SearchedDataAdapter(searchedData, this.context, userId, true)
+
+        popularRestaurantsRecycler.adapter=popularRestaurantsAdapter
+        popularPubsRecycler.adapter=popularPubsAdapter
+        categoriesRecycler.adapter=categoryAdapter
         searchedDataRecycler.adapter=searchedDataAdapter
 
 
@@ -84,6 +93,14 @@ class HomeFragment : Fragment() {
                 popularRestaurants.addAll(it)
                 Log.d(DataRepository.TAG, "getFamousRestaurants: $it")
                 popularRestaurantsAdapter.notifyDataSetChanged()
+            }
+        })
+        viewModel.getPubs()?.observe(this.viewLifecycleOwner, Observer {
+            if(it!=null){
+                popularPubs.clear()
+                popularPubs.addAll(it)
+                Log.d(DataRepository.TAG, "getPubs: $it")
+                popularPubsAdapter.notifyDataSetChanged()
             }
         })
         viewModel.search("")?.observe(this.viewLifecycleOwner, Observer {
@@ -131,6 +148,7 @@ class HomeFragment : Fragment() {
 
     private fun initialise(view: View) {
         popularRestaurantsRecycler=view.findViewById(R.id.popular_restaurants)
+        popularPubsRecycler=view.findViewById(R.id.pubs)
         searchCard=view.findViewById(R.id.search_card)
         searcher=view.findViewById(R.id.search)
         searcheProgress=view.findViewById(R.id.progress)

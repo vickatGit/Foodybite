@@ -38,4 +38,5 @@ interface BusinessFetcher {
         @Header("Authorization") authHeader: String,
         @Path("id") id:String
     ):Call<BusinessReviewsModel>
+
 }

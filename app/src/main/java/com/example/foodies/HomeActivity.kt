@@ -80,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
         homeFragment.arguments=bundle
         supportFragmentManager.beginTransaction().replace(R.id.frag_placeholder,homeFragment,"home_fragment").addToBackStack(null).commit()
 
-        bottomNavigationView.background=null
+
         bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bookmarks -> {
@@ -124,5 +124,6 @@ class HomeActivity : AppCompatActivity() {
     }
     fun initialise(){
         bottomNavigationView=findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.background=null
     }
 }

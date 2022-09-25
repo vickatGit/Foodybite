@@ -15,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true" >
-        <activity
-            android:name=".SearchFriendActivity"
-            android:exported="false" />
+
         <activity
             android:name=".FriendsActivity"
             android:exported="false" />
