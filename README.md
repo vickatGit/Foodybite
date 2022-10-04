@@ -1,4 +1,4 @@
-<h1 align="center">Foodybite</h1>
+<h1 align="center">Foodybite - MVVM based</h1>
 <img src="https://firebasestorage.googleapis.com/v0/b/food-clone-c7e62.appspot.com/o/Foodies_readme_cropped.jpg?alt=media&token=27d2f2ef-f8ab-47e3-9308-29f0ba650c20">
 
 
